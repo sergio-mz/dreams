@@ -1,5 +1,14 @@
 <?php
 
+use App\Http\Controllers\CharacteristicController;
+use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\DomeController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PayMethodController;
+use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\PlanController;
+use App\Http\Controllers\RoleController;
+use App\Http\Controllers\ServiceController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -11,9 +20,9 @@ use Illuminate\Support\Facades\Route;
 | routes are loaded by the RouteServiceProvider and all of them will
 | be assigned to the "web" middleware group. Make something great!
 |
-*/
+ */
 
-Route::get('/', function () {
+ Route::get('/', function () {
     return view('welcome');
 });
 
@@ -22,7 +31,26 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
-    Route::get('/dashboard', function () {
+    /* Route::get('/dashboard', function () {
         return view('dashboard');
-    })->name('dashboard');
+    })->name('dashboard'); */
+
+    Route::get('/dashboard', HomeController::class)->name('home');
+
+    Route::controller(CharacteristicController::class)->group(function () {
+        Route::get('caracteristicas', 'index')->name('caracteristicas.index');
+        Route::get('caracteristicas/create', 'create')->name('caracteristicas.create');
+        Route::post('caracteristicas', 'store')->name('caracteristicas.store');
+        Route::get('caracteristicas/{caracteristica}', 'show')->name('caracteristicas.show');
+        Route::get('caracteristicas/{caracteristica}/edit', 'edit')->name('caracteristicas.edit');
+        Route::put('caracteristicas/{caracteristica}', 'update')->name('caracteristicas.update');
+        Route::delete('caracteristicas/{caracteristica}', 'destroy')->name('caracteristicas.destroy');
+    });
+
+    Route::resource('clientes', CustomerController::class);
+    Route::resource('metodos', PayMethodController::class);
+    Route::resource('servicios', ServiceController::class);
+    Route::resource('domos', DomeController::class);
+    Route::resource('planes', PlanController::class);
+
 });
