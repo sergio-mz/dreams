@@ -1,118 +1,94 @@
-@extends('layouts.plantilla')
+@extends('adminlte::page')
 
-@section('title', 'Clientes edit')
+@section('title', 'Dashboard')
+
+@section('content_header')
+    <h1></h1>
+@stop
 
 @section('content')
-    <h1>En esta pagina podras editar un cliente</h1>
-    <form action="{{route('clientes.update',$cliente)}}" method="POST">
 
-        @csrf {{-- agrega un input oculto con un token para temas de seguridad --}}
-        @method('put') {{-- como html no entiende el put, aqui lo especifico --}}
+<div class="container">
+    <h1 class="mb-4">Editar Cliente: {{ $cliente->name }} {{ $cliente->last_name }}</h1>
+    <a href="{{ route('clientes.index') }}" class="btn btn-secondary mb-2">Volver a Clientes</a>
+    <form action="{{ route('clientes.update', $cliente) }}" method="POST">
+        @csrf {{-- Agrega un input oculto con un token para temas de seguridad --}}
+        @method('put') {{-- Como HTML no entiende el método "put", aquí lo especifico --}}
 
-        <label>
-            Cedula:
-            <br>
-            <input type="text" name="document" value="{{old('document',$cliente->document)}}">
-        </label>
+        <div class="mb-2">
+            <label for="document" class="form-label">Cédula:</label>
+            <input type="text" name="document" id="document" class="form-control" value="{{ old('document', $cliente->document) }}">
+            @error('document')
+                <small class="text-danger">{{ $message }}</small>
+            @enderror
+        </div>
 
-        @error('document') {{-- funciona como un if --}}
-            <br>
-            <small>*{{$message}}</small>
-            <br>
-        @enderror
+        <div class="mb-2">
+            <label for="name" class="form-label">Nombre:</label>
+            <input type="text" name="name" id="name" class="form-control" value="{{ old('name', $cliente->name) }}">
+            @error('name')
+                <small class="text-danger">{{ $message }}</small>
+            @enderror
+        </div>
 
-        <br>
-        <label>
-            Nombre:
-            <br>
-            <input type="text" name="name" value="{{old('name',$cliente->name)}}">
-        </label>
+        <div class="mb-2">
+            <label for="last_name" class="form-label">Apellido:</label>
+            <input type="text" name="last_name" id="last_name" class="form-control" value="{{ old('last_name', $cliente->last_name) }}">
+            @error('last_name')
+                <small class="text-danger">{{ $message }}</small>
+            @enderror
+        </div>
 
-        @error('name') {{-- funciona como un if --}}
-            <br>
-            <small>*{{$message}}</small>
-            <br>
-        @enderror
+        <div class="mb-2">
+            <label for="email" class="form-label">Correo:</label>
+            <input type="email" name="email" id="email" class="form-control" value="{{ old('email', $cliente->email) }}">
+            @error('email')
+                <small class="text-danger">{{ $message }}</small>
+            @enderror
+        </div>
 
-        <br>
-        <label>
-            Apellido:
-            <br>
-            <input type="text" name="last_name" value="{{old('last_name',$cliente->last_name)}}">
-        </label>
+        <div class="mb-2">
+            <label for="cellphone" class="form-label">Celular:</label>
+            <input type="text" name="cellphone" id="cellphone" class="form-control" value="{{ old('cellphone', $cliente->cellphone) }}">
+            @error('cellphone')
+                <small class="text-danger">{{ $message }}</small>
+            @enderror
+        </div>
 
-        @error('last_name') {{-- funciona como un if --}}
-            <br>
-            <small>*{{$message}}</small>
-            <br>
-        @enderror
+        <div class="mb-2">
+            <label for="birthdate" class="form-label">Fecha de nacimiento:</label>
+            <input type="date" name="birthdate" id="birthdate" class="form-control" value="{{ old('birthdate', $cliente->birthdate) }}">
+            @error('birthdate')
+                <small class="text-danger">{{ $message }}</small>
+            @enderror
+        </div>
 
-        <br>
-        <label>
-            Correo:
-            <br>
-            <input type="email" name="email" value="{{old('email',$cliente->email)}}">
-        </label>
+        <div class="mb-2">
+            <label for="city" class="form-label">Ciudad:</label>
+            <input type="text" name="city" id="city" class="form-control" value="{{ old('city', $cliente->city) }}">
+            @error('city')
+                <small class="text-danger">{{ $message }}</small>
+            @enderror
+        </div>
 
-        @error('email') {{-- funciona como un if --}}
-            <br>
-            <small>*{{$message}}</small>
-            <br>
-        @enderror
+        <div class="mb-3">
+            <label for="address" class="form-label">Dirección:</label>
+            <input type="text" name="address" id="address" class="form-control" value="{{ old('address', $cliente->address) }}">
+            @error('address')
+                <small class="text-danger">{{ $message }}</small>
+            @enderror
+        </div>
 
-        <br>
-        <label>
-            Celular:
-            <br>
-            <input type="text" name="cellphone" value="{{old('cellphone',$cliente->cellphone)}}">
-        </label>
-
-        @error('cellphone') {{-- funciona como un if --}}
-            <br>
-            <small>*{{$message}}</small>
-            <br>
-        @enderror
-
-        <br>
-        <label>
-            Fecha de nacimiento:
-            <br>
-            <input type="date" name="birthdate" value="{{old('birthdate',$cliente->birthdate)}}">
-        </label>
-
-        @error('birthdate') {{-- funciona como un if --}}
-            <br>
-            <small>*{{$message}}</small>
-            <br>
-        @enderror
-
-        <br>
-        <label>
-            Ciudad:
-            <br>
-            <input type="text" name="city" value="{{old('city',$cliente->city)}}">
-        </label>
-
-        @error('city') {{-- funciona como un if --}}
-            <br>
-            <small>*{{$message}}</small>
-            <br>
-        @enderror
-
-        <br>
-        <label>
-            Dirección:
-            <br>
-            <input type="text" name="address" value="{{old('address',$cliente->address)}}">
-        </label>
-
-        @error('address') {{-- funciona como un if --}}
-            <br>
-            <small>*{{$message}}</small>
-            <br>
-        @enderror
-
-        <br>
-        <button type="submit">Actualizar cliente</button>
+        <button type="submit" class="btn btn-primary">Actualizar cliente</button>
     </form>
-@endsection
+</div>
+
+@stop
+
+@section('css')
+    <link rel="stylesheet" href="/css/admin_custom.css">
+@stop
+
+@section('js')
+    <script> console.log('Hi!'); </script>
+@stop

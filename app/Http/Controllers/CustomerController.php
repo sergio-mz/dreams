@@ -40,7 +40,6 @@ class CustomerController extends Controller
         ]);
 
         $cliente = Customer::create($request->all());  /*otra forma de hacerlo*/
-        $cliente->id = $request->id;
 
         return redirect()->route('clientes.show',$cliente->id);
     }

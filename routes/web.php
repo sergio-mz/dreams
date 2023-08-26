@@ -5,9 +5,7 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DomeController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PayMethodController;
-use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\PlanController;
-use App\Http\Controllers\RoleController;
 use App\Http\Controllers\ServiceController;
 use Illuminate\Support\Facades\Route;
 
@@ -22,20 +20,20 @@ use Illuminate\Support\Facades\Route;
 |
  */
 
- Route::get('/', function () {
+/* Route::get('/', function () {
     return view('welcome');
-});
+}); */
 
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
-    /* Route::get('/dashboard', function () {
+    Route::get('/dashboard', function () {
         return view('dashboard');
-    })->name('dashboard'); */
+    })->name('dashboard');
 
-    Route::get('/dashboard', HomeController::class)->name('home');
+    Route::get('/', HomeController::class)->name('home');
 
     Route::controller(CharacteristicController::class)->group(function () {
         Route::get('caracteristicas', 'index')->name('caracteristicas.index');

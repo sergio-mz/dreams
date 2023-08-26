@@ -1,68 +1,65 @@
-@extends('layouts.plantilla')
+@extends('adminlte::page')
 
-@section('title', 'Caracteristicas edit')
+@section('title', 'Dashboard')
+
+@section('content_header')
+    <h1></h1>
+@stop
 
 @section('content')
-    <h1>En esta pagina podras editar una caracteristica</h1>
-    <form action="{{route('caracteristicas.update',$caracteristica)}}" method="POST">
 
-        @csrf {{-- agrega un input oculto con un token para temas de seguridad --}}
-        @method('put') {{-- como html no entiende el put, aqui lo especifico --}}
+<div class="container">
+    <h1 class="mb-4">Editar Característica</h1>
+    <a href="{{ route('caracteristicas.index') }}" class="btn btn-secondary mb-2">Volver a Características</a>
+    <form action="{{ route('caracteristicas.update', $caracteristica) }}" method="POST">
+        @csrf {{-- Agrega un input oculto con un token para temas de seguridad --}}
+        @method('put') {{-- Como HTML no entiende el método "put", aquí lo especifico --}}
 
-        <label>
-            Nombre:
-            <br>
-            <input type="text" name="name" value="{{old('name',$caracteristica->name)}}">
-        </label>
+        <div class="mb-2">
+            <label for="name" class="form-label">Nombre:</label>
+            <input type="text" name="name" id="name" class="form-control" value="{{ old('name', $caracteristica->name) }}">
+            @error('name')
+                <small class="text-danger">{{ $message }}</small>
+            @enderror
+        </div>
 
-        @error('name') {{-- funciona como un if --}}
-            <br>
-            <small>*{{$message}}</small>
-            <br>
-        @enderror
-
-        <br>
-        <label>
-            Estado:
-            <br>
-            <select name="status">
+        <div class="mb-2">
+            <label for="status" class="form-label mr-3">Estado:</label>
+            <select name="status" id="status" class="form-select">
                 <option value="1" {{ $caracteristica->status === 1 ? 'selected' : '' }}>Activo</option>
                 <option value="0" {{ $caracteristica->status === 0 ? 'selected' : '' }}>Inactivo</option>
             </select>
-        </label>
+            @error('status')
+                <small class="text-danger">{{ $message }}</small>
+            @enderror
+        </div>
 
-        @error('status') {{-- funciona como un if --}}
-            <br>
-            <small>*{{$message}}</small>
-            <br>
-        @enderror
+        <div class="mb-2">
+            <label for="description" class="form-label">Descripción:</label>
+            <textarea name="description" id="description" class="form-control" rows="3">{{ old('description', $caracteristica->description) }}</textarea>
+            @error('description')
+                <small class="text-danger">{{ $message }}</small>
+            @enderror
+        </div>
 
-        <br>
-        <label>
-            Descripcion:
-            <br>
-            <textarea name="description" rows="5">{{old('description',$caracteristica->description)}}</textarea>
-        </label>
+        <div class="mb-3">
+            <label for="price" class="form-label">Precio:</label>
+            <input type="text" name="price" id="price" class="form-control" value="{{ old('price', $caracteristica->price) }}">
+            @error('price')
+                <small class="text-danger">{{ $message }}</small>
+            @enderror
+        </div>
 
-        @error('description') {{-- funciona como un if --}}
-            <br>
-            <small>*{{$message}}</small>
-            <br>
-        @enderror
-
-        <br>
-        <label>
-            Precio:
-            <br>
-            <input type="text" name="price" value="{{old('price',$caracteristica->price)}}">
-        </label>
-
-        @error('price') {{-- funciona como un if --}}
-            <br>
-            <small>*{{$message}}</small>
-            <br>
-        @enderror
-        <br>
-        <button type="submit">Actualizar caracteristica</button>
+        <button type="submit" class="btn btn-primary">Actualizar Característica</button>
     </form>
-@endsection
+</div>
+
+@stop
+
+@section('css')
+    <link rel="stylesheet" href="/css/admin_custom.css">
+@stop
+
+@section('js')
+    <script> console.log('Hi!'); </script>
+@stop
