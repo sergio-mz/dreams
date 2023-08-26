@@ -379,6 +379,16 @@ return [
         ],
         ['header' => 'MODULOS'],
         [
+            'text'       => 'Usuarios',
+            'icon_color' => 'red',
+            'route'        => 'usuarios.index',
+        ],
+        [
+            'text'       => 'Roles',
+            'icon_color' => 'red',
+            'route'        => 'roles.index',
+        ],
+        [
             'text'       => 'Características',
             'icon_color' => 'red',
             'route'        => 'caracteristicas.index',
