@@ -16,16 +16,16 @@ class RoleSeeder extends Seeder
     {
         Role::create(['name'=>'Admin','status'=>1]);
 
-        Permission::create(['name' => 'home'])->assignRole('Admin');
+        Permission::create(['name' => 'home','description' => 'Ver página principal'])->assignRole('Admin');
 
-        Permission::create(['name' => 'roles.index'])->assignRole('Admin');
-        Permission::create(['name' => 'roles.create'])->assignRole('Admin');
-        Permission::create(['name' => 'roles.edit'])->assignRole('Admin');
-        Permission::create(['name' => 'roles.destroy'])->assignRole('Admin');
+        Permission::create(['name' => 'roles.index','description' => 'Ver listado de roles'])->assignRole('Admin');
+        Permission::create(['name' => 'roles.create','description' => 'Crear rol'])->assignRole('Admin');
+        Permission::create(['name' => 'roles.edit','description' => 'Editar rol'])->assignRole('Admin');
+        Permission::create(['name' => 'roles.destroy','description' => 'Eliminar rol'])->assignRole('Admin');
 
-        Permission::create(['name' => 'caracteristicas.index'])->assignRole('Admin');
-        Permission::create(['name' => 'caracteristicas.create'])->assignRole('Admin');
-        Permission::create(['name' => 'caracteristicas.edit'])->assignRole('Admin');
-        Permission::create(['name' => 'caracteristicas.destroy'])->assignRole('Admin');
+        Permission::create(['name' => 'caracteristicas.index','description' => 'Ver listado de características'])->assignRole('Admin');
+        Permission::create(['name' => 'caracteristicas.create','description' => 'Crear característica'])->assignRole('Admin');
+        Permission::create(['name' => 'caracteristicas.edit','description' => 'Editar característica'])->assignRole('Admin');
+        Permission::create(['name' => 'caracteristicas.destroy','description' => 'Eliminar característica'])->assignRole('Admin');
     }
 }

@@ -41,8 +41,9 @@
                     <label class="permission-label">
                         <input type="checkbox" name="permissions[]" value="{{ $permission->id }}"
                             {{ $role->permissions->contains($permission->id) ? 'checked' : '' }}>
-                        {{ $permission->name }}
+                        {{ $permission->description }}
                     </label>
+                    <br>
                 @endforeach
             </div>
         </div>

@@ -25,18 +25,14 @@ use Illuminate\Support\Facades\Route;
 Route::get('/registrar', function () {
     return view('welcome');
 });
-Route::resource('roles',RoleController::class);
+
 
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
     'verified',
+    'role:Admin',
 ])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
-
-    Route::get('/', HomeController::class)->name('home');
 
     Route::controller(CharacteristicController::class)->group(function () {
         Route::get('caracteristicas', 'index')->name('caracteristicas.index');
@@ -48,12 +44,26 @@ Route::middleware([
         Route::delete('caracteristicas/{caracteristica}', 'destroy')->name('caracteristicas.destroy');
     });
 
-    Route::resource('clientes', CustomerController::class);
-    Route::resource('metodos', PayMethodController::class);
-    Route::resource('servicios', ServiceController::class);
-    Route::resource('domos', DomeController::class);
-    Route::resource('planes', PlanController::class);
+    Route::resource('roles',RoleController::class);
     Route::resource('usuarios', UserController::class);
+    Route::resource('domos', DomeController::class);
+    Route::resource('servicios', ServiceController::class);
+    Route::resource('planes', PlanController::class);
+    Route::resource('metodos', PayMethodController::class);
+});
+
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified',
+])->group(function () {
+
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
+
     
+    Route::get('/', HomeController::class)->name('home');
+    Route::resource('clientes', CustomerController::class);
 
 });

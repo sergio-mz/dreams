@@ -387,6 +387,7 @@ return [
         ],
         [
             'text'       => 'Roles',
+            'icon' => 'fas fa-users-cog fa-fw',
             'icon_color' => 'red',
             'route'        => 'roles.index',
             'can'        => 'caracteristicas.index',
