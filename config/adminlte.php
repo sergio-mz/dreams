@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Validation\Rules\Can;
+
 return [
 
     /*
@@ -387,7 +389,9 @@ return [
             'text'       => 'Roles',
             'icon_color' => 'red',
             'route'        => 'roles.index',
+            'can'        => 'caracteristicas.index',
         ],
+        
         [
             'text'       => 'Características',
             'icon_color' => 'red',

@@ -10,7 +10,10 @@
 
 <div class="container">
     <h1 class="text-2xl font-semibold mb-4">Características</h1>
-    <a href="{{ route('caracteristicas.create') }}" class="btn btn-primary mb-3">Crear Característica</a>
+
+    @can('caracteristicas.create')
+        <a href="{{ route('caracteristicas.create') }}" class="btn btn-primary mb-3">Crear Característica</a>
+    @endcan
     
     <table class="table">
         <thead class="bg-gray-200">

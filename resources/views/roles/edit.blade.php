@@ -23,6 +23,17 @@
             @enderror
         </div>
 
+        <div class="mb-2">
+            <label for="status" class="form-label mr-3">Estado:</label>
+            <select name="status" id="status" class="form-select">
+                <option value="1" {{ $role->status === 1 ? 'selected' : '' }}>Activo</option>
+                <option value="0" {{ $role->status === 0 ? 'selected' : '' }}>Inactivo</option>
+            </select>
+            @error('status')
+                <small class="text-danger">{{ $message }}</small>
+            @enderror
+        </div>
+
         <div class="form-group">
             <label>Permisos:</label>
             <div>

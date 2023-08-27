@@ -40,7 +40,10 @@ class RoleController extends Controller
 
         $role->save(); */
 
-        $role = Role::create($request->all()); /*otra forma de hacerlo*/
+        $role = Role::create([
+            'name'=>$request->name,
+            'status'=>1,
+        ]); /*otra forma de hacerlo*/
 
         return redirect()->route('roles.show', $role->id);
     }
@@ -72,6 +75,7 @@ class RoleController extends Controller
         ]);
 
         $role->name = $request->name;
+        $role->status = $request->status;
 
         $role->save();
 

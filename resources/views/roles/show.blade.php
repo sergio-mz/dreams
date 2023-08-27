@@ -18,6 +18,11 @@
             <p class="card-text">{{ $role->name }}</p>
         </div>
 
+        <div class="card mb-1 p-2 pl-4">
+            <h5 class="card-title"><strong>Estado</strong></h5>
+            <p class="card-text">{{ $role->status == 1 ? 'Activo' : 'Inactivo' }}</p>
+        </div>
+
         <div class="card mb-3 p-3">
             <h5 class="card-title"><strong>Permisos Asignados</strong></h5>
             <ul>
