@@ -44,7 +44,7 @@
 
         <div class="mb-3">
             <label for="price" class="form-label">Precio:</label>
-            <input type="text" name="price" id="price" class="form-control" value="{{ old('price', $caracteristica->price) }}">
+            <input type="number" name="price" id="price" class="form-control" step="0.01" value="{{ old('price', $caracteristica->price) }}">
             @error('price')
                 <small class="text-danger">{{ $message }}</small>
             @enderror

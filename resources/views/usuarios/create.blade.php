@@ -15,9 +15,25 @@
         @csrf {{-- Agrega un input oculto con un token para temas de seguridad --}}
 
         <div class="mb-2">
+            <label for="document" class="form-label">Cédula:</label>
+            <input type="text" name="document" id="document" class="form-control" value="{{ old('document') }}" placeholder="Sin puntos, ni comas">
+            @error('document')
+                <small class="text-danger">{{ $message }}</small>
+            @enderror
+        </div>
+
+        <div class="mb-2">
             <label for="name" class="form-label">Nombre:</label>
             <input type="text" name="name" id="name" class="form-control" value="{{ old('name') }}">
             @error('name')
+                <small class="text-danger">{{ $message }}</small>
+            @enderror
+        </div>
+
+        <div class="mb-2">
+            <label for="last_name" class="form-label">Apellido:</label>
+            <input type="text" name="last_name" id="last_name" class="form-control" value="{{ old('last_name') }}">
+            @error('last_name')
                 <small class="text-danger">{{ $message }}</small>
             @enderror
         </div>
@@ -30,10 +46,64 @@
             @enderror
         </div>
 
+        <div class="mb-2">
+            <label for="cellphone" class="form-label">Celular:</label>
+            <input type="text" name="cellphone" id="cellphone" class="form-control" value="{{ old('cellphone') }}" placeholder="Ej. 3105557799">
+            @error('cellphone')
+                <small class="text-danger">{{ $message }}</small>
+            @enderror
+        </div>
+
+        <div class="mb-3">
+            <label for="address" class="form-label">Dirección:</label>
+            <input type="text" name="address" id="address" class="form-control" value="{{ old('address') }}">
+            @error('address')
+                <small class="text-danger">{{ $message }}</small>
+            @enderror
+        </div>
+
+        <div class="mb-2">
+            <label for="city" class="form-label">Ciudad:</label>
+            <input type="text" name="city" id="city" class="form-control" value="{{ old('city') }}" placeholder="Medellin">
+            @error('city')
+                <small class="text-danger">{{ $message }}</small>
+            @enderror
+        </div>
+
+        <div class="mb-2">
+            <label for="birthdate" class="form-label">Fecha de nacimiento:</label>
+            <input type="date" name="birthdate" id="birthdate" class="form-control" value="{{ old('birthdate') }}" placeholder="AAAA-MM-DD">
+            @error('birthdate')
+                <small class="text-danger">{{ $message }}</small>
+            @enderror
+        </div>
+
+        <div class="mb-2">
+            <label for="gender" class="form-label">Genero:</label>
+            <select name="gender" id="gender" class="form-select">
+                <option value="Masculino" {{ old('gender') == 'Masculino' ? 'selected' : '' }}>Masculino</option>
+                <option value="Femenino" {{ old('gender') == 'Femenino' ? 'selected' : '' }}>Femenino</option>
+            </select>
+            @error('gender')
+                <small class="text-danger">{{ $message }}</small>
+            @enderror
+        </div>
+
         <div class="mb-3">
             <label for="password" class="form-label">Contraseña:</label>
             <input type="text" name="password" id="password" class="form-control">
             @error('password')
+                <small class="text-danger">{{ $message }}</small>
+            @enderror
+        </div>
+
+        <div class="mb-2">
+            <label for="status" class="form-label">Estado:</label>
+            <select name="status" id="status" class="form-select">
+                <option value="1" {{ old('status') == '1' ? 'selected' : '' }}>Activo</option>
+                <option value="0" {{ old('status') == '0' ? 'selected' : '' }}>Inactivo</option>
+            </select>
+            @error('status')
                 <small class="text-danger">{{ $message }}</small>
             @enderror
         </div>

@@ -19,8 +19,18 @@
         </div>
 
         <div class="card mb-1 p-2 pl-4">
+            <h5 class="card-title"><strong>Cedula</strong></h5>
+            <p class="card-text">{{ $usuario->document }}</p>
+        </div>
+
+        <div class="card mb-1 p-2 pl-4">
             <h5 class="card-title"><strong>Nombre</strong></h5>
             <p class="card-text">{{ $usuario->name }}</p>
+        </div>
+
+        <div class="card mb-1 p-2 pl-4">
+            <h5 class="card-title"><strong>Apellido</strong></h5>
+            <p class="card-text">{{ $usuario->last_name }}</p>
         </div>
 
         <div class="card mb-1 p-2 pl-4">
@@ -29,10 +39,40 @@
         </div>
 
         <div class="card mb-1 p-2 pl-4">
+            <h5 class="card-title"><strong>Celular</strong></h5>
+            <p class="card-text">{{ $usuario->cellphone }}</p>
+        </div>
+
+        <div class="card mb-1 p-2 pl-4">
+            <h5 class="card-title"><strong>Direccción</strong></h5>
+            <p class="card-text">{{ $usuario->address }}</p>
+        </div>
+
+        <div class="card mb-1 p-2 pl-4">
+            <h5 class="card-title"><strong>Ciudad</strong></h5>
+            <p class="card-text">{{ $usuario->city }}</p>
+        </div>
+
+        <div class="card mb-1 p-2 pl-4">
+            <h5 class="card-title"><strong>Fecha de Nacimiento</strong></h5>
+            <p class="card-text">{{ $usuario->birthdate }}</p>
+        </div>
+
+        <div class="card mb-1 p-2 pl-4">
+            <h5 class="card-title"><strong>Genero</strong></h5>
+            <p class="card-text">{{ $usuario->gender }}</p>
+        </div>
+
+        <div class="card mb-1 p-2 pl-4">
             <h5 class="card-title"><strong>Rol Asignado</strong></h5>
                 @foreach ($usuario->roles as $role)
                     <p class="card-text">{{ $role->name }}</p>
                 @endforeach
+        </div>
+
+        <div class="card mb-1 p-2 pl-4">
+            <h5 class="card-title"><strong>Estado</strong></h5>
+            <p class="card-text">{{ $usuario->status == 1 ? 'Activo' : 'Inactivo' }}</p>
         </div>
 
         <form action="{{ route('usuarios.destroy', $usuario) }}" method="POST" class="mt-2">

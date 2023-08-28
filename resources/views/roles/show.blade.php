@@ -11,7 +11,10 @@
     <div class="container">
         <h1 class="mb-4">Detalles:</h1>
         <a href="{{ route('roles.index') }}" class="btn btn-secondary mb-2">Volver a Roles</a>
-        <a href="{{ route('roles.edit', $role) }}" class="btn btn-warning mb-2">Editar Rol</a>
+        @if ($role->id != 1)
+            <a href="{{ route('roles.edit', $role) }}" class="btn btn-warning mb-2">Editar Rol</a>
+        @endif
+
 
         <div class="card mb-1 p-2 pl-4">
             <h5 class="card-title"><strong>Nombre</strong></h5>
@@ -27,17 +30,20 @@
             <h5 class="card-title"><strong>Permisos Asignados</strong></h5>
             <ul>
                 @foreach ($role->permissions as $permission)
-                    <li>{{ $permission->name }}</li>
+                    <li>{{ $permission->description }}</li>
                 @endforeach
             </ul>
         </div>
 
-        <form action="{{ route('roles.destroy', $role) }}" method="POST" class="mt-2">
-            @csrf
-            @method('delete')
-            <button type="submit" class="btn btn-danger"
-                onclick="return confirm('¿Estás seguro de eliminar este rol?')">Eliminar</button>
-        </form>
+        @if ($role->id != 1)
+            <form action="{{ route('roles.destroy', $role) }}" method="POST" class="mt-2">
+                @csrf
+                @method('delete')
+                <button type="submit" class="btn btn-danger"
+                    onclick="return confirm('¿Estás seguro de eliminar este rol?')">Eliminar</button>
+            </form>
+        @endif
+
     </div>
 
 @stop

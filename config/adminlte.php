@@ -332,14 +332,9 @@ return [
         ],
         ['header' => 'CONFIGURACIÓN DE CUENTA'],
         [
-            'text' => 'profile',
-            'url'  => 'admin/settings',
+            'text' => 'Perfil',
+            'url'  => 'user/profile',
             'icon' => 'fas fa-fw fa-user',
-        ],
-        [
-            'text' => 'change_password',
-            'url'  => 'admin/settings',
-            'icon' => 'fas fa-fw fa-lock',
         ],
         [
             'text'    => 'multilevel',
@@ -384,44 +379,51 @@ return [
             'text'       => 'Usuarios',
             'icon_color' => 'red',
             'route'        => 'usuarios.index',
+            'can'        => 'usuarios.index',
         ],
         [
             'text'       => 'Roles',
             'icon' => 'fas fa-users-cog fa-fw',
             'icon_color' => 'red',
             'route'        => 'roles.index',
-            'can'        => 'caracteristicas.index',
+            'can'        => 'roles.index',
         ],
         
         [
             'text'       => 'Características',
             'icon_color' => 'red',
             'route'        => 'caracteristicas.index',
+            'can'        => 'caracteristicas.index',
         ],
         [
             'text'       => 'Clientes',
             'icon_color' => 'red',
             'route'        => 'clientes.index',
+            'can'        => 'clientes.index',
         ],
         [
             'text'       => 'Métodos',
             'icon_color' => 'red',
             'route'        => 'metodos.index',
+            'can'        => 'metodos.index',
         ],
         [
             'text'       => 'Servicios',
             'icon_color' => 'red',
             'route'        => 'servicios.index',
+            'can'        => 'servicios.index',
         ],
         [
             'text'       => 'Domos',
             'icon_color' => 'red',
             'route'        => 'domos.index',
+            'can'        => 'domos.index',
         ],
         [
             'text'       => 'Planes',
             'icon_color' => 'red',
             'route'        => 'planes.index',
+            'can'        => 'planes.index',
         ],
     ],
 

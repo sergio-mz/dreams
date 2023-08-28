@@ -1,108 +1,95 @@
-@extends('layouts.plantilla')
+@extends('adminlte::page')
 
-@section('title', 'Domos edit')
+@section('title', 'Domos')
+
+@section('content_header')
+    <h1></h1>
+@stop
 
 @section('content')
-    <h1>En esta pagina podras editar una domo</h1>
-    <form action="{{route('domos.update',$domo)}}" method="POST">
 
-        @csrf {{-- agrega un input oculto con un token para temas de seguridad --}}
-        @method('put') {{-- como html no entiende el put, aqui lo especifico --}}
+<div class="container">
+    <h1 class="mb-4">Editar Domo</h1>
+    <a href="{{ route('domos.index') }}" class="btn btn-secondary mb-2">Volver a Domos</a>
+    <form action="{{ route('domos.update', $domo) }}" method="POST">
+        @csrf {{-- Agrega un input oculto con un token para temas de seguridad --}}
+        @method('put') {{-- Como HTML no entiende el método "put", aquí lo especifico --}}
 
-        <label>
-            Nombre:
-            <br>
-            <input type="text" name="name" value="{{old('name',$domo->name)}}">
-        </label>
+        <div class="mb-2">
+            <label for="name" class="form-label">Nombre:</label>
+            <input type="text" name="name" id="name" class="form-control" value="{{ old('name', $domo->name) }}">
+            @error('name')
+                <small class="text-danger">{{ $message }}</small>
+            @enderror
+        </div>
 
-        @error('name') {{-- funciona como un if --}}
-            <br>
-            <small>*{{$message}}</small>
-            <br>
-        @enderror
-
-        <br>
-        <label>
-            Estado:
-            <br>
-            <select name="status">
+        <div class="mb-2">
+            <label for="status" class="form-label mr-3">Estado:</label>
+            <select name="status" id="status" class="form-select">
                 <option value="1" {{ $domo->status === 1 ? 'selected' : '' }}>Activo</option>
                 <option value="0" {{ $domo->status === 0 ? 'selected' : '' }}>Inactivo</option>
             </select>
-        </label>
+            @error('status')
+                <small class="text-danger">{{ $message }}</small>
+            @enderror
+        </div>
 
-        @error('status') {{-- funciona como un if --}}
-            <br>
-            <small>*{{$message}}</small>
-            <br>
-        @enderror
+        <div class="mb-3">
+            <label for="price" class="form-label">Precio:</label>
+            <input type="number" name="price" id="price" class="form-control" step="0.01" value="{{ old('price', $domo->price) }}">
+            @error('price')
+                <small class="text-danger">{{ $message }}</small>
+            @enderror
+        </div>
 
-        <br>
-        <label>
-            Precio:
-            <br>
-            <input type="text" name="price" value="{{old('price',$domo->price)}}">
-        </label>
+        <div class="mb-2">
+            <label for="location" class="form-label">Ubicación:</label>
+            <input type="text" name="location" id="location" class="form-control" value="{{ old('location', $domo->location) }}">
+            @error('location')
+                <small class="text-danger">{{ $message }}</small>
+            @enderror
+        </div>
 
-        @error('price') {{-- funciona como un if --}}
-            <br>
-            <small>*{{$message}}</small>
-            <br>
-        @enderror
-        <br>
-        <label>
-            ubicacion:
-            <br>
-            <textarea name="location" rows="5">{{old('location',$domo->location)}}</textarea>
-        </label>
+        <div class="mb-2">
+            <label for="description" class="form-label">Descripción:</label>
+            <textarea name="description" id="description" class="form-control" rows="3">{{ old('description', $domo->description) }}</textarea>
+            @error('description')
+                <small class="text-danger">{{ $message }}</small>
+            @enderror
+        </div>
 
-        @error('location') {{-- funciona como un if --}}
-            <br>
-            <small>*{{$message}}</small>
-            <br>
-        @enderror
-
-
-        <br>
-        <label>
-            Descripcion:
-            <br>
-            <textarea name="description" rows="5">{{old('description',$domo->description)}}</textarea>
-        </label>
-
-        @error('description') {{-- funciona como un if --}}
-            <br>
-            <small>*{{$message}}</small>
-            <br>
-        @enderror
-       
-        <br>
-        <label>
-            capacidad:
-            <br>
-            <input type="text" name="capacity" value="{{old('capacity',$domo->capacity)}}">
-        </label>
-
-        @error('capacity') {{-- funciona como un if --}}
-            <br>
-            <small>*{{$message}}</small>
-            <br>
-        @enderror
+        <div class="mb-3">
+            <label for="capacity" class="form-label">Capacidad:</label>
+            <input type="number" name="capacity" id="capacity" class="form-control" value="{{ old('capacity', $domo->capacity) }}">
+            @error('capacity')
+                <small class="text-danger">{{ $message }}</small>
+            @enderror
+        </div>
 
         <div class="form-group">
-            <label>Caracteristicas:</label>
+            <label>Características:</label>
             <div>
                 @foreach($caracteristicas as $caracteristica)
-                    <label>
+                    <label class="caracteristica-label">
                         <input type="checkbox" name="caracteristicas[]" value="{{ $caracteristica->id }}"
                             {{ $domo->characteristics->contains($caracteristica->id) ? 'checked' : '' }}>
                         {{ $caracteristica->name }}
                     </label>
+                    <br>
                 @endforeach
             </div>
         </div>
 
-        <br>
-        <button type="submit">Actualizar domo</button>
+        <button type="submit" class="btn btn-primary">Actualizar Domo</button>
     </form>
-@endsection
+</div>
+
+@stop
+
+@section('css')
+    <link rel="stylesheet" href="/css/admin_custom.css">
+@stop
+
+@section('js')
+    <script> console.log('Hi!'); </script>
+@stop

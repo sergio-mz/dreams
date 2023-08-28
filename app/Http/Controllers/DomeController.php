@@ -95,7 +95,7 @@ class DomeController extends Controller
         $domo->update($array); /*otra forma de hacerlo*/
 
         // Actualizar las caracteristicas asignados al domo
-        $domo->characteristics()->sync($request->input('caracteristicas', []));
+        $domo->characteristics()->sync($request->caracteristicas);
 
         return redirect()->route('domos.show', $domo->id);
     }

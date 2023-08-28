@@ -28,7 +28,7 @@ Route::get('/registrar', function () {
 
 
 Route::middleware([
-    'auth:sanctum',
+    'auth:web',
     config('jetstream.auth_session'),
     'verified',
     'role:Admin',

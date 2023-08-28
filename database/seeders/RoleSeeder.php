@@ -27,5 +27,45 @@ class RoleSeeder extends Seeder
         Permission::create(['name' => 'caracteristicas.create','description' => 'Crear característica'])->assignRole('Admin');
         Permission::create(['name' => 'caracteristicas.edit','description' => 'Editar característica'])->assignRole('Admin');
         Permission::create(['name' => 'caracteristicas.destroy','description' => 'Eliminar característica'])->assignRole('Admin');
+
+        Permission::create(['name' => 'domos.index','description' => 'Ver listado de domos'])->assignRole('Admin');
+        Permission::create(['name' => 'domos.create','description' => 'Crear domo'])->assignRole('Admin');
+        Permission::create(['name' => 'domos.edit','description' => 'Editar domo'])->assignRole('Admin');
+        Permission::create(['name' => 'domos.destroy','description' => 'Eliminar domo'])->assignRole('Admin');
+
+        Permission::create(['name' => 'clientes.index','description' => 'Ver listado de clientes'])->assignRole('Admin');
+        Permission::create(['name' => 'clientes.create','description' => 'Crear cliente'])->assignRole('Admin');
+        Permission::create(['name' => 'clientes.edit','description' => 'Editar cliente'])->assignRole('Admin');
+        Permission::create(['name' => 'clientes.destroy','description' => 'Eliminar cliente'])->assignRole('Admin');
+
+        Permission::create(['name' => 'servicios.index','description' => 'Ver listado de servicios'])->assignRole('Admin');
+        Permission::create(['name' => 'servicios.create','description' => 'Crear servicio'])->assignRole('Admin');
+        Permission::create(['name' => 'servicios.edit','description' => 'Editar servicio'])->assignRole('Admin');
+        Permission::create(['name' => 'servicios.destroy','description' => 'Eliminar servicio'])->assignRole('Admin');
+
+        Permission::create(['name' => 'metodos.index','description' => 'Ver listado de metodos'])->assignRole('Admin');
+        Permission::create(['name' => 'metodos.create','description' => 'Crear metodo'])->assignRole('Admin');
+        Permission::create(['name' => 'metodos.edit','description' => 'Editar metodo'])->assignRole('Admin');
+        Permission::create(['name' => 'metodos.destroy','description' => 'Eliminar metodo'])->assignRole('Admin');
+
+        Permission::create(['name' => 'planes.index','description' => 'Ver listado de planes'])->assignRole('Admin');
+        Permission::create(['name' => 'planes.create','description' => 'Crear plan'])->assignRole('Admin');
+        Permission::create(['name' => 'planes.edit','description' => 'Editar plan'])->assignRole('Admin');
+        Permission::create(['name' => 'planes.destroy','description' => 'Eliminar plan'])->assignRole('Admin');
+
+        Permission::create(['name' => 'reservas.index','description' => 'Ver listado de reservas'])->assignRole('Admin');
+        Permission::create(['name' => 'reservas.create','description' => 'Crear reserva'])->assignRole('Admin');
+        Permission::create(['name' => 'reservas.edit','description' => 'Editar reserva'])->assignRole('Admin');
+        Permission::create(['name' => 'reservas.destroy','description' => 'Eliminar reserva'])->assignRole('Admin');
+
+        Permission::create(['name' => 'recomendaciones.index','description' => 'Ver listado de recomendaciones'])->assignRole('Admin');
+        Permission::create(['name' => 'recomendaciones.create','description' => 'Crear recomendación'])->assignRole('Admin');
+        Permission::create(['name' => 'recomendaciones.edit','description' => 'Editar recomendación'])->assignRole('Admin');
+        Permission::create(['name' => 'recomendaciones.destroy','description' => 'Eliminar recomendación'])->assignRole('Admin');
+
+        Permission::create(['name' => 'usuarios.index','description' => 'Ver listado de usuarios'])->assignRole('Admin');
+        Permission::create(['name' => 'usuarios.create','description' => 'Crear usuario'])->assignRole('Admin');
+        Permission::create(['name' => 'usuarios.edit','description' => 'Editar usuario'])->assignRole('Admin');
+        Permission::create(['name' => 'usuarios.destroy','description' => 'Eliminar usuario'])->assignRole('Admin');
     }
 }
