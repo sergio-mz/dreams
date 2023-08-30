@@ -56,7 +56,7 @@
 
         <div class="mb-2">
             <label for="birthdate" class="form-label">Fecha de nacimiento:</label>
-            <input type="date" name="birthdate" id="birthdate" class="form-control" value="{{ old('birthdate') }}" placeholder="AAAA-MM-DD">
+            <input type="date" name="birthdate" id="birthdate" class="form-control" value="{{ old('birthdate') }}">
             @error('birthdate')
                 <small class="text-danger">{{ $message }}</small>
             @enderror

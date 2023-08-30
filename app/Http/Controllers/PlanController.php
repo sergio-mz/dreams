@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Dome;
 use App\Models\Plan;
+use App\Models\Service;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 
@@ -62,8 +63,9 @@ class PlanController extends Controller
      */
     public function edit(Plan $plane)
     {
-        $domos = Dome::all(); // Obtener todos los permisos
-        return view('planes.edit', compact('plane', 'domos'));
+        $domos = Dome::all(); // Obtener todos los domos
+        $servicios = Service::all(); // Obtener todos los servicios
+        return view('planes.edit', compact('plane', 'domos', 'servicios'));
     }
 
     /**
@@ -87,11 +89,13 @@ class PlanController extends Controller
         $caracteristica->save(); */
         
         $array = $request->all();
-        Arr::forget($array, 'domo');
+        Arr::forget($array, 'domos');
+        Arr::forget($array, 'servicios');
         $plane->update($array); /*otra forma de hacerlo*/
 
-        // Actualizar las caracteristicas asignados al plane
-        $plane->domes()->sync($request->input('domo', []));
+        // Actualizar los domos y servicios asignados al plan
+        $plane->domes()->sync($request->input('domos', []));
+        $plane->services()->sync($request->input('servicios', []));
 
         return redirect()->route('planes.show', $plane->id);
     }

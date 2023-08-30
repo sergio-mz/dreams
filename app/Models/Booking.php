@@ -19,19 +19,22 @@ class Booking extends Model
         return $this->hasOne('App\Models\Receipt');
     }
 
-    //relacion uno a muchos
-    public function bookingDomes(){
-        return $this->hasMany('App\Models\BookingDome');
+    //relacion muchos a muchos
+    public function domes(){
+        return $this->belongsToMany('App\Models\Dome')
+                    ->withPivot('price');
     }
 
-    //relacion uno a muchos
-    public function bookingPlans(){
-        return $this->hasMany('App\Models\BookingPlan');
+    //relacion muchos a muchos
+    public function plans(){
+        return $this->belongsToMany('App\Models\Plan')
+                    ->withPivot('price');
     }
 
-    //relacion uno a muchos
-    public function bookingServices(){
-        return $this->hasMany('App\Models\BookingService');
+    //relacion muchos a muchos
+    public function services(){
+        return $this->belongsToMany('App\Models\Service')
+                    ->withPivot('price', 'quantity');
     }
 
     //relacion uno a muchos (inversa)

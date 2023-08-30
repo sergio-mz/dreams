@@ -1,11 +1,13 @@
 <?php
 
+use App\Http\Controllers\BookingController;
 use App\Http\Controllers\CharacteristicController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DomeController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PayMethodController;
 use App\Http\Controllers\PlanController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\UserController;
@@ -65,5 +67,7 @@ Route::middleware([
     
     Route::get('/', HomeController::class)->name('home');
     Route::resource('clientes', CustomerController::class);
-
+    Route::resource('reservas', BookingController::class);
+    Route::get('/perfil', [ProfileController::class, 'show'])->name('perfil.show');
+    Route::get('/buscar-domos-disponibles', [BookingController::class, 'getAvailableDomos'])->name('buscar-domos-disponibles');
 });

@@ -1,19 +1,44 @@
-@extends('layouts.plantilla')
+@extends('adminlte::page')
 
-@section('title', 'Metodo ' . $metodo->name)
+@section('title', 'Métodos')
+
+@section('content_header')
+    <h1></h1>
+@stop
 
 @section('content')
-<h1>Bienvenidos al metodo de pago:  {{$metodo->name}} </h1>
-<a href="{{route('metodos.index')}}">Volver a metodos</a>
-<br>
-<a href="{{route('metodos.edit',$metodo)}}">Editar metodo de pago</a>
-<p><strong>Metodo de pago: </strong>{{$metodo->name}}</p>
-<br>
 
-<form action="{{route('metodos.destroy',$metodo)}}" method="POST">
-    @csrf
-    @method('delete')
-    <button type="submit">Eliminar</button>
-</form>
+    <div class="container">
+        <h1 class="mb-4">Detalles:</h1>
+        <a href="{{ route('metodos.index') }}" class="btn btn-secondary mb-2">Volver a Métodos</a>
+        @if ($metodo->id != 1)
+            <a href="{{ route('metodos.edit', $metodo) }}" class="btn btn-warning mb-2">Editar Método</a>
+        @endif
 
-@endsection
+        <div class="card mb-1 p-2 pl-4">
+            <h5 class="card-title"><strong>Nombre</strong></h5>
+            <p class="card-text">{{ $metodo->name }}</p>
+        </div>
+
+        @if ($metodo->id != 1)
+            <form action="{{ route('metodos.destroy', $metodo) }}" method="POST" class="mt-2">
+                @csrf
+                @method('delete')
+                <button type="submit" class="btn btn-danger"
+                    onclick="return confirm('¿Estás seguro de eliminar este rol?')">Eliminar</button>
+            </form>
+        @endif
+
+    </div>
+
+@stop
+
+@section('css')
+    <link rel="stylesheet" href="/css/admin_custom.css">
+@stop
+
+@section('js')
+    <script>
+        console.log('Hi!');
+    </script>
+@stop

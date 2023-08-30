@@ -9,15 +9,16 @@ class Service extends Model
 {
     use HasFactory;
 
+    protected $guarded = [];
+
     //relacion muchos a muchos
     public function plans(){
         return $this->belongsToMany('App\Models\Plan');
     }
 
-    //relacion uno a muchos
-    public function bookingServices(){
-        return $this->hasMany('App\Models\BookingService');
+    //relacion muchos a muchos
+    public function bookings(){
+        return $this->belongsToMany('App\Models\Booking')
+                    ->withPivot('price', 'quantity');
     }
-        /* protected $fillable = ['name', 'descripcion','categoria']; */ /* aqui campos que quiero guardar */
-        protected $guarded = []; /* aqui campos que no quiero q guarde */
 }

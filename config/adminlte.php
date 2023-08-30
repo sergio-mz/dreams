@@ -333,7 +333,7 @@ return [
         ['header' => 'CONFIGURACIÓN DE CUENTA'],
         [
             'text' => 'Perfil',
-            'url'  => 'user/profile',
+            'route'  => 'perfil.show',
             'icon' => 'fas fa-fw fa-user',
         ],
         [
@@ -375,6 +375,13 @@ return [
             ],
         ],
         ['header' => 'MODULOS'],
+        [
+            'text'       => 'Reservas',
+            'icon' => 'fas fa-users-cog fa-fw',
+            'icon_color' => 'red',
+            'route'        => 'reservas.index',
+            'can'        => 'reservas.index',
+        ],
         [
             'text'       => 'Usuarios',
             'icon_color' => 'red',

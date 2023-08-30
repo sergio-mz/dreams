@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Dashboard')
+@section('title', 'Características')
 
 @section('content_header')
     <h1></h1>
@@ -33,18 +33,18 @@
             @enderror
         </div>
 
-        <div class="mb-2">
-            <label for="description" class="form-label">Descripción:</label>
-            <textarea name="description" id="description" class="form-control" rows="5">{{ old('description') }}</textarea>
-            @error('description')
-                <small class="text-danger">{{ $message }}</small>
-            @enderror
-        </div>
-
         <div class="mb-3">
             <label for="price" class="form-label">Precio:</label>
             <input type="number" name="price" id="price" class="form-control" step="0.01" value="{{ old('price') }}">
             @error('price')
+                <small class="text-danger">{{ $message }}</small>
+            @enderror
+        </div>
+
+        <div class="mb-2">
+            <label for="description" class="form-label">Descripción:</label>
+            <textarea name="description" id="description" class="form-control" rows="5">{{ old('description') }}</textarea>
+            @error('description')
                 <small class="text-danger">{{ $message }}</small>
             @enderror
         </div>

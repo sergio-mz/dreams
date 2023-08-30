@@ -43,7 +43,7 @@
             <p class="card-text">{{ $domo->status == 1 ? 'Activo' : 'Inactivo' }}</p>
         </div>
 
-        <div class="card mb-3 p-3">
+        <div class="card mb-1 p-2 pl-4">
             <h5 class="card-title"><strong>Caracteristicas Asignadas</strong></h5>
             <ul>
                 @foreach ($domo->characteristics as $characteristic)

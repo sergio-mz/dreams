@@ -1,27 +1,38 @@
-@extends('layouts.plantilla')
+@extends('adminlte::page')
 
-@section('title', 'Metodos edit')
+@section('title', 'Métodos')
+
+@section('content_header')
+    <h1></h1>
+@stop
 
 @section('content')
-    <h1>En esta pagina podras editar una metodo</h1>
-    <form action="{{route('metodos.update',$metodo)}}" method="POST">
 
-        @csrf {{-- agrega un input oculto con un token para temas de seguridad --}}
-        @method('put') {{-- como html no entiende el put, aqui lo especifico --}}
+<div class="container">
+    <h1 class="mb-4">Editar Método</h1>
+    <a href="{{ route('metodos.index') }}" class="btn btn-secondary mb-2">Volver a metodos</a>
+    <form action="{{ route('metodos.update', $metodo) }}" method="POST">
+        @csrf {{-- Agrega un input oculto con un token para temas de seguridad --}}
+        @method('put') {{-- Como HTML no entiende el método "put", aquí lo especifico --}}
 
-        <label>
-            Metodo de pago:
-            <br>
-            <input type="text" name="name" value="{{old('name',$metodo->name)}}">
-        </label>
+        <div class="mb-2">
+            <label for="name" class="form-label">Nombre:</label>
+            <input type="text" name="name" id="name" class="form-control" value="{{ old('name', $metodo->name) }}">
+            @error('name')
+                <small class="text-danger">{{ $message }}</small>
+            @enderror
+        </div>
 
-        @error('name') {{-- funciona como un if --}}
-            <br>
-            <small>*{{$message}}</small>
-            <br>
-        @enderror
-
-        <br>
-        <button type="submit">Actualizar metodo de pago</button>
+        <button type="submit" class="btn btn-primary">Actualizar Rol</button>
     </form>
-@endsection
+</div>
+
+@stop
+
+@section('css')
+    <link rel="stylesheet" href="/css/admin_custom.css">
+@stop
+
+@section('js')
+    <script> console.log('Hi!'); </script>
+@stop

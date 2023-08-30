@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Editar Rol')
+@section('title', 'Roles')
 
 @section('content_header')
     <h1></h1>
@@ -9,7 +9,7 @@
 @section('content')
 
 <div class="container">
-    <h1 class="mb-4">Editar Rol: {{ $role->name }} {{ $role->last_name }}</h1>
+    <h1 class="mb-4">Editar Rol</h1>
     <a href="{{ route('roles.index') }}" class="btn btn-secondary mb-2">Volver a Roles</a>
     <form action="{{ route('roles.update', $role) }}" method="POST">
         @csrf {{-- Agrega un input oculto con un token para temas de seguridad --}}

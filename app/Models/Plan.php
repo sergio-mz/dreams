@@ -23,10 +23,11 @@ class Plan extends Model
         return $this->belongsToMany('App\Models\Service');
     }
 
-    //relacion uno a muchos
-    public function bookingPlans()
+    //relacion muchos a muchos
+    public function bookings()
     {
-        return $this->hasMany('App\Models\BookingPlan');
+        return $this->belongsToMany('App\Models\Booking')
+                    ->withPivot('price');
     }
 
     //relacion uno a muchos

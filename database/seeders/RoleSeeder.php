@@ -15,6 +15,7 @@ class RoleSeeder extends Seeder
     public function run(): void
     {
         Role::create(['name'=>'Admin','status'=>1]);
+        Role::create(['name'=>'Asistente','status'=>1]);
 
         Permission::create(['name' => 'home','description' => 'Ver página principal'])->assignRole('Admin');
 
@@ -28,10 +29,10 @@ class RoleSeeder extends Seeder
         Permission::create(['name' => 'caracteristicas.edit','description' => 'Editar característica'])->assignRole('Admin');
         Permission::create(['name' => 'caracteristicas.destroy','description' => 'Eliminar característica'])->assignRole('Admin');
 
-        Permission::create(['name' => 'domos.index','description' => 'Ver listado de domos'])->assignRole('Admin');
-        Permission::create(['name' => 'domos.create','description' => 'Crear domo'])->assignRole('Admin');
-        Permission::create(['name' => 'domos.edit','description' => 'Editar domo'])->assignRole('Admin');
-        Permission::create(['name' => 'domos.destroy','description' => 'Eliminar domo'])->assignRole('Admin');
+        Permission::create(['name' => 'domos.index','description' => 'Ver listado de domos'])->syncRoles('Admin','Asistente');
+        Permission::create(['name' => 'domos.create','description' => 'Crear domo'])->syncRoles('Admin','Asistente');
+        Permission::create(['name' => 'domos.edit','description' => 'Editar domo'])->syncRoles('Admin','Asistente');
+        Permission::create(['name' => 'domos.destroy','description' => 'Eliminar domo'])->syncRoles('Admin','Asistente');
 
         Permission::create(['name' => 'clientes.index','description' => 'Ver listado de clientes'])->assignRole('Admin');
         Permission::create(['name' => 'clientes.create','description' => 'Crear cliente'])->assignRole('Admin');
@@ -53,10 +54,10 @@ class RoleSeeder extends Seeder
         Permission::create(['name' => 'planes.edit','description' => 'Editar plan'])->assignRole('Admin');
         Permission::create(['name' => 'planes.destroy','description' => 'Eliminar plan'])->assignRole('Admin');
 
-        Permission::create(['name' => 'reservas.index','description' => 'Ver listado de reservas'])->assignRole('Admin');
-        Permission::create(['name' => 'reservas.create','description' => 'Crear reserva'])->assignRole('Admin');
-        Permission::create(['name' => 'reservas.edit','description' => 'Editar reserva'])->assignRole('Admin');
-        Permission::create(['name' => 'reservas.destroy','description' => 'Eliminar reserva'])->assignRole('Admin');
+        Permission::create(['name' => 'reservas.index','description' => 'Ver listado de reservas'])->syncRoles('Admin','Asistente');
+        Permission::create(['name' => 'reservas.create','description' => 'Crear reserva'])->syncRoles('Admin','Asistente');
+        Permission::create(['name' => 'reservas.edit','description' => 'Editar reserva'])->syncRoles('Admin','Asistente');
+        Permission::create(['name' => 'reservas.destroy','description' => 'Eliminar reserva'])->syncRoles('Admin','Asistente');
 
         Permission::create(['name' => 'recomendaciones.index','description' => 'Ver listado de recomendaciones'])->assignRole('Admin');
         Permission::create(['name' => 'recomendaciones.create','description' => 'Crear recomendación'])->assignRole('Admin');
