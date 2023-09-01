@@ -34,12 +34,8 @@
         </div>
 
         <div class="card mb-1 p-2 pl-4">
-            <h5 class="card-title"><strong>Domos con este plan</strong></h5>
-            <ul>
-                @foreach ($plane->domes as $dome)
-                    <li>{{ $dome->name }}</li>
-                @endforeach
-            </ul>
+            <h5 class="card-title"><strong>Domo</strong></h5>
+            <p class="card-text">{{ $plane->dome->name }}</p>
         </div>
 
         <div class="card mb-1 p-2 pl-4">

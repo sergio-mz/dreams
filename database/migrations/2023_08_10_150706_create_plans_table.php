@@ -14,7 +14,13 @@ return new class extends Migration
         Schema::create('plans', function (Blueprint $table) {
             $table->id();
             $table->string('name',100);
-            $table->decimal('price',10,2);            
+            $table->decimal('price',10,2);  
+            
+            $table->unsignedBigInteger('dome_id');
+            $table->foreign('dome_id')->references('id')->on('domes')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
+                
             $table->boolean('status');
             $table->text('description');
             $table->timestamps();

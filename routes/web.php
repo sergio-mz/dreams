@@ -28,7 +28,6 @@ Route::get('/registrar', function () {
     return view('welcome');
 });
 
-
 Route::middleware([
     'auth:web',
     config('jetstream.auth_session'),
@@ -46,7 +45,7 @@ Route::middleware([
         Route::delete('caracteristicas/{caracteristica}', 'destroy')->name('caracteristicas.destroy');
     });
 
-    Route::resource('roles',RoleController::class);
+    Route::resource('roles', RoleController::class);
     Route::resource('usuarios', UserController::class);
     Route::resource('domos', DomeController::class);
     Route::resource('servicios', ServiceController::class);
@@ -64,10 +63,12 @@ Route::middleware([
         return view('dashboard');
     })->name('dashboard');
 
-    
     Route::get('/', HomeController::class)->name('home');
     Route::resource('clientes', CustomerController::class);
     Route::resource('reservas', BookingController::class);
     Route::get('/perfil', [ProfileController::class, 'show'])->name('perfil.show');
     Route::get('/buscar-domos-disponibles', [BookingController::class, 'getAvailableDomos'])->name('buscar-domos-disponibles');
+    Route::get('/check-availability', [BookingController::class, 'showAvailabilityForm'])->name('availability.form');
+    Route::post('/check-availability', [BookingController::class, 'showAvailableDomes'])->name('availability.check');
+
 });

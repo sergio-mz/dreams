@@ -11,10 +11,9 @@ class Plan extends Model
 
     protected $guarded = [];
 
-    //relacion muchos a muchos
-    public function domes()
-    {
-        return $this->belongsToMany('App\Models\Dome');
+    //relacion uno a muchos (inversa)
+    public function dome(){
+        return $this->belongsTo('App\Models\Dome');
     }
 
     //relacion muchos a muchos

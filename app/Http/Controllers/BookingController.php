@@ -45,6 +45,24 @@ class BookingController extends Controller
         return view('layouts.partials.domos-disponibles', ['domosDisponibles' => $domosDisponibles]);
     }
 
+
+    public function showAvailabilityForm()
+    {
+        return view('availability');
+    }
+
+
+    public function showAvailableDomes(Request $request)
+    {
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
+
+        $availableDomes = Dome::availableForDates($startDate, $endDate)
+            ->get();
+
+        return view('availability', compact('availableDomes', 'startDate', 'endDate'));
+    }
+
     /**
      * Store a newly created resource in storage.
      */

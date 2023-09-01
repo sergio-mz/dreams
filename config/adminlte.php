@@ -379,7 +379,7 @@ return [
             'text'       => 'Reservas',
             'icon' => 'fas fa-users-cog fa-fw',
             'icon_color' => 'red',
-            'route'        => 'reservas.index',
+            'route'        => 'availability.form',
             'can'        => 'reservas.index',
         ],
         [

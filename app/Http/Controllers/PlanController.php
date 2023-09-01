@@ -24,7 +24,8 @@ class PlanController extends Controller
      */
     public function create()
     {
-        return view('planes.create');
+        $domos = Dome::all(); // Obtener todos los domos
+        return view('planes.create', compact('domos'));
     }
 
     /**
@@ -37,6 +38,7 @@ class PlanController extends Controller
             'price' => 'required',
             'status' => 'required',
             'description' => 'required',
+            'dome_id' => 'required',
         ]);
 
         /* $role = new Role();
@@ -78,6 +80,7 @@ class PlanController extends Controller
             'price' => 'required',
             'status' => 'required',
             'description' => 'required',
+            'dome_id' => 'required',
         ]);
 
         /*
@@ -89,12 +92,10 @@ class PlanController extends Controller
         $caracteristica->save(); */
         
         $array = $request->all();
-        Arr::forget($array, 'domos');
         Arr::forget($array, 'servicios');
         $plane->update($array); /*otra forma de hacerlo*/
 
         // Actualizar los domos y servicios asignados al plan
-        $plane->domes()->sync($request->input('domos', []));
         $plane->services()->sync($request->input('servicios', []));
 
         return redirect()->route('planes.show', $plane->id);

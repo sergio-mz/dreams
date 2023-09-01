@@ -17,10 +17,10 @@ class Dome extends Model
         return $this->belongsToMany('App\Models\Characteristic');
     }
 
-    //relacion muchos a muchos
+    //relacion uno a muchos
     public function plans()
     {
-        return $this->belongsToMany('App\Models\Plan');
+        return $this->hasMany('App\Models\Plan');
     }
 
     //relacion muchos a muchos
@@ -32,7 +32,15 @@ class Dome extends Model
 
     public function scopeAvailableForDates($query, $startDate, $endDate)
     {
-        return $query->whereDoesntHave('reservas', function ($query) use ($startDate, $endDate) {
+        return $query->whereDoesntHave('bookings', function ($query) use ($startDate, $endDate) {
+            $query->whereBetween('start_date', [$startDate, $endDate])
+                ->orWhereBetween('end_date', [$startDate, $endDate])
+                ->orWhere(function ($query) use ($startDate, $endDate) {
+                    $query->where('start_date', '<=', $startDate)
+                        ->where('end_date', '>=', $endDate);
+                });
+        })
+        ->orWhereDoesntHave('plans.bookings', function ($query) use ($startDate, $endDate) {
             $query->whereBetween('start_date', [$startDate, $endDate])
                 ->orWhereBetween('end_date', [$startDate, $endDate])
                 ->orWhere(function ($query) use ($startDate, $endDate) {
@@ -41,4 +49,5 @@ class Dome extends Model
                 });
         });
     }
+
 }
