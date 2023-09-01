@@ -11,77 +11,131 @@
     <div class="container">
         <h1 class="mb-4">Crear Nueva Reserva</h1>
         <a href="{{ route('reservas.index') }}" class="btn btn-secondary mb-2">Volver a Reservas</a>
-        <form action="{{ route('reservas.store') }}" method="POST">
-            @csrf {{-- Agrega un input oculto con un token para temas de seguridad --}}
 
-            <div class="mb-2">
-                <label for="start_date" class="form-label">Fecha Inicio:</label>
-                <input type="date" name="start_date" id="start_date" class="form-control" value="{{ old('start_date') }}">
-                @error('start_date')
-                    <small class="text-danger">{{ $message }}</small>
-                @enderror
-            </div>
 
+        <form action="{{ route('reservas.create') }}" method="POST">
+            @csrf
             <div class="mb-2">
                 <label for="start_date" class="form-label">Fecha Inicio:</label>
                 <input type="date" name="start_date" id="start_date" class="form-control"
-                    value="{{ old('start_date') }}">
+                    value="{{ isset($fechaInicio) ? $fechaInicio : '' }}">
                 @error('start_date')
                     <small class="text-danger">{{ $message }}</small>
                 @enderror
             </div>
 
             <div class="mb-2">
-                <label for="customer_id" class="form-label">Cliente:</label>
-                <select name="customer_id" id="customer_id" class="form-control chosen-select">
-                    <option value="">Cliente</option>
-                    @foreach ($clientes as $cliente)
-                        <option value="{{ $cliente->id }}">{{ $cliente->document }}</option>
-                    @endforeach
-                </select>
-                @error('customer_id')
+                <label for="end_date" class="form-label">Fecha Fin:</label>
+                <input type="date" name="end_date" id="end_date" class="form-control"
+                    value="{{ isset($fechaFin) ? $fechaFin : '' }}">
+                @error('end_date')
                     <small class="text-danger">{{ $message }}</small>
                 @enderror
             </div>
 
-            <div class="mb-2">
-                <label for="domes" class="form-label">Domos:</label>
-                <select name="domes[]" id="domes" class="form-control chosen-select" multiple>
-                    @foreach ($domos as $domo)
-                        <option value="{{ $domo->id }}">{{ $domo->name }}</option>
-                    @endforeach
-                </select>
-                @error('domes')
-                    <small class="text-danger">{{ $message }}</small>
-                @enderror
-            </div>
-
-            <div class="mb-2">
-                <label for="plans" class="form-label">Planes:</label>
-                <select name="plans[]" id="plans" class="form-control chosen-select" multiple>
-                    @foreach ($planes as $plane)
-                        <option value="{{ $plane->id }}">{{ $plane->name }}</option>
-                    @endforeach
-                </select>
-                @error('plans')
-                    <small class="text-danger">{{ $message }}</small>
-                @enderror
-            </div>
-
-            <div class="mb-2">
-                <label for="services" class="form-label">Servicios:</label>
-                <select name="services[]" id="services" class="form-control chosen-select" multiple>
-                    @foreach ($servicios as $servicio)
-                        <option value="{{ $servicio->id }}">{{ $servicio->name }}</option>
-                    @endforeach
-                </select>
-                @error('services')
-                    <small class="text-danger">{{ $message }}</small>
-                @enderror
-            </div>
-
-            <button type="submit" class="btn btn-primary">Enviar formulario</button>
+            <button type="submit" class="btn btn-primary">Verificar Fechas</button>
         </form>
+
+        @if (isset($fechaInicio) && isset($fechaFin))
+            <form action="{{ route('reservas.store') }}" method="POST">
+                @csrf
+
+                <div class="mb-2">
+                    <label for="start_date" class="form-label" style="display: none;">Fecha Inicio:</label>
+                    <input type="date" name="start_date" id="start_date" class="form-control" value="{{ $fechaInicio }}"
+                        style="display: none;">
+                    @error('start_date')
+                        <small class="text-danger">{{ $message }}</small>
+                    @enderror
+                </div>
+
+                <div class="mb-2">
+                    <label for="end_date" class="form-label" style="display: none;">Fecha Fin:</label>
+                    <input type="date" name="end_date" id="end_date" class="form-control" value="{{ $fechaFin }}"
+                        style="display: none;">
+                    @error('end_date')
+                        <small class="text-danger">{{ $message }}</small>
+                    @enderror
+                </div>
+
+                <div class="mb-2">
+                    <label for="customer_id" class="form-label">Cliente:</label>
+                    <select name="customer_id" id="customer_id" class="form-control chosen-select">
+                        <option value="">Cliente</option>
+                        @foreach ($clientes as $cliente)
+                            <option value="{{ $cliente->id }}">{{ $cliente->document }}</option>
+                        @endforeach
+                    </select>
+                    @error('customer_id')
+                        <small class="text-danger">{{ $message }}</small>
+                    @enderror
+                </div>
+
+                <div class="mb-2">
+                    <label for="domes" class="form-label">Domos:</label>
+                    @if ($domosDisponibles->count() > 0)
+                        <select name="domes[]" id="domes" class="form-control chosen-select" multiple>
+                            @foreach ($domosDisponibles as $domo)
+                                <option value="{{ $domo->id }}">{{ $domo->name }}</option>
+                            @endforeach
+                        </select>
+                    @else
+                        <p> No hay Domos disponibles en estas fechas</p>
+                    @endif
+                    @error('domes')
+                        <small class="text-danger">{{ $message }}</small>
+                    @enderror
+                </div>
+
+                <div class="mb-2">
+                    <label for="plans" class="form-label">Planes:</label>
+                    @if ($planesDisponibles->count() > 0)
+                        <select name="plans[]" id="plans" class="form-control chosen-select" multiple>
+                            @foreach ($planesDisponibles as $plane)
+                                <option value="{{ $plane->id }}">{{ $plane->name }}</option>
+                            @endforeach
+                        </select>
+                    @else
+                        <p> No hay Planes disponibles en estas fechas</p>
+                    @endif
+                    @error('plans')
+                        <small class="text-danger">{{ $message }}</small>
+                    @enderror
+                </div>
+
+                <div class="mb-2">
+                    <label for="services" class="form-label">Servicios:</label>
+                    <select name="services[]" id="services" class="form-control chosen-select" multiple>
+                        @foreach ($servicios as $servicio)
+                            <option value="{{ $servicio->id }}">{{ $servicio->name }}</option>
+                        @endforeach
+                    </select>
+                    @error('services')
+                        <small class="text-danger">{{ $message }}</small>
+                    @enderror
+                </div>
+
+                <div class="mb-2">
+                    <label for="discount" class="form-label">Descuento(%):</label>
+                    <input type="number" name="discount" id="discount" class="form-control" step="0.01"
+                        value="{{ old('discount'), '0' }}">
+                    @error('discount')
+                        <small class="text-danger">{{ $message }}</small>
+                    @enderror
+                </div>
+
+                <div class="mb-2">
+                    <label for="tax" class="form-label">Impuesto(%):</label>
+                    <input type="number" name="tax" id="tax" class="form-control" step="0.01"
+                        value="{{ old('tax'), '19' }}">
+                    @error('tax')
+                        <small class="text-danger">{{ $message }}</small>
+                    @enderror
+                </div>
+
+                <button type="submit" class="btn btn-primary">Enviar formulario</button>
+            </form>
+        @endif
     </div>
 
 @stop

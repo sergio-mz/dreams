@@ -34,4 +34,16 @@ class Plan extends Model
     {
         return $this->hasMany('App\Models\OfferPlan');
     }
+
+    public function scopeAvailableForDates($query, $fechaInicio, $fechaFin)
+    {
+        return $query->whereDoesntHave('bookings', function ($query) use ($fechaInicio, $fechaFin) {
+            $query->whereBetween('start_date', [$fechaInicio, $fechaFin])
+                ->orWhereBetween('end_date', [$fechaInicio, $fechaFin])
+                ->orWhere(function ($query) use ($fechaInicio, $fechaFin) {
+                    $query->where('start_date', '<=', $fechaInicio)
+                        ->where('end_date', '>=', $fechaFin);
+                });
+        });
+    }
 }

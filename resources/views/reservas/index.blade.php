@@ -12,7 +12,7 @@
     <h1 class="text-2xl font-semibold mb-4">Reservas</h1>
 
     @can('reservas.create')
-        <a href="{{ route('reservas.create') }}" class="btn btn-primary mb-3">Crear Reserva</a>
+        <a href="{{ route('disponibilidad.domos') }}" class="btn btn-primary mb-3">Crear Reserva</a>
     @endcan
     
     <table class="table">
@@ -27,7 +27,7 @@
                 <tr class="bg-white border">
                     <td class="align-middle">
                         <ul class="list-unstyled mb-1 pl-2">
-                            <li><strong><a href="{{ route('reservas.show', $reserva) }}">{{ $reserva->name }}</a></strong></li>
+                            <li><strong><a href="{{ route('reservas.show', $reserva) }}">{{ $reserva->start_date }}</a></strong></li>
                         </ul>
                     </td>
                     <td class="align-middle">

@@ -7,10 +7,9 @@ use App\Models\Customer;
 use App\Models\Dome;
 use App\Models\Plan;
 use App\Models\Service;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
-use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class BookingController extends Controller
 {
@@ -19,48 +18,38 @@ class BookingController extends Controller
      */
     public function index()
     {
-        $reservas = Booking::orderBy('name', 'desc')->paginate();
-        return view('ingresar-fechas', compact('reservas'));
+        $reservas = Booking::orderBy('id', 'asc')->paginate();
+        return view('reservas.index', compact('reservas'));
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function availableDomes()
     {
-        $domos = Dome::all(); // Obtener todos los domos
-        $servicios = Service::all(); // Obtener todos los servicios
-        $planes = Plan::all(); // Obtener todos los planes
-        $clientes = Customer::all(); // Obtener todos los clientes
-        return view('reservas.create', compact('domos', 'servicios', 'planes', 'clientes'));
+        return view('reservas.create');
     }
 
-    public function getAvailableDomos(Request $request)
+    public function create(Request $request)
     {
-        $startDate = Carbon::parse($request->input('start_date'));
-        $endDate = Carbon::parse($request->input('end_date'));
+        $request->validate([
+            'start_date' => 'required',
+            'end_date' => 'required',
+        ]);
 
-        $domosDisponibles = Dome::availableForDates($startDate, $endDate)->get();
+        $fechaInicio = $request->input('start_date');
+        $fechaFin = $request->input('end_date');
 
-        return view('layouts.partials.domos-disponibles', ['domosDisponibles' => $domosDisponibles]);
-    }
-
-
-    public function showAvailabilityForm()
-    {
-        return view('availability');
-    }
-
-
-    public function showAvailableDomes(Request $request)
-    {
-        $startDate = $request->input('start_date');
-        $endDate = $request->input('end_date');
-
-        $availableDomes = Dome::availableForDates($startDate, $endDate)
+        $domosDisponibles = Dome::availableForDates($fechaInicio, $fechaFin)
+            ->get();
+        $planesDisponibles = Plan::availableForDates($fechaInicio, $fechaFin)
             ->get();
 
-        return view('availability', compact('availableDomes', 'startDate', 'endDate'));
+        $servicios = Service::all(); // Obtener todos los servicios
+        $clientes = Customer::all(); // Obtener todos los clientes
+
+        return view('reservas.create', compact('domosDisponibles', 'fechaInicio', 'fechaFin', 'servicios', 'planesDisponibles', 'clientes'));
+        /* return [$domosDisponibles, $fechaInicio, $fechaFin]; */
     }
 
     /**
@@ -68,22 +57,60 @@ class BookingController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'start_date' => 'required',
-            'end_date' => 'required',
-            'user_id' => 'required',
-            'curtomer_id' => 'required',
+        /* $request->validate([
+        'start_date' => 'required',
+        'end_date' => 'required',
+        'customer_id' => 'required',
+        'discount' => 'required',
+        'tax' => 'required',
+        ]); */
+        $valordomos = 0;
+        $valorplanes = 0;
+        $valorservicios = 0;
+
+        $domesWithPrices = [];
+        $planesWithPrices = [];
+        $servicesWithPrices = [];
+
+        foreach ($request->domes as $dome) {
+            $price = Dome::find($dome)->price;
+            $valordomos += $price;
+            $domesWithPrices[$dome] = ['price' => $price];
+        }
+        foreach ($request->plans as $plan) {
+            $price = Plan::find($plan)->price;
+            $valorplanes += $price;
+            $planesWithPrices[$plan] = ['price' => $price];
+        }
+        foreach ($request->services as $service) {
+            $price = Service::find($service)->price;
+            $valorservicios += $price;
+            $servicesWithPrices[$service] = ['price' => $price,'quantity' => "1"];
+        }
+        $subtotal = $valordomos + $valorplanes + $valorservicios;
+        $total = $subtotal * (1 - ($request->discount) / 100) * (1 + ($request->tax) / 100);
+
+        $reserva = Booking::create([
+            'start_date' => $request->start_date,
+            'end_date' => $request->end_date,
+            'user_id' => Auth::user()->id,
+            'customer_id' => $request->customer_id,
+            'subtotal' => $subtotal,
+            'discount' => $request->discount,
+            'tax' => $request->tax,
+            'total' => $total,
         ]);
 
-        /* $role = new Role();
+        /* foreach ($request->domes as $domeId) {
+            // Utiliza el método attach para agregar la relación con el precio
+            $reserva->domes()->attach($domeId, ['price' => Dome::find($dome)->price]);
+        } */
+        $reserva->domes()->sync($domesWithPrices);
+        $reserva->plans()->sync($planesWithPrices);
+        $reserva->services()->sync($servicesWithPrices);
 
-        $role->name = $request->name;
+        return redirect()->route('reservas.show', $reserva->id);
 
-        $role->save(); */
-
-        $reserva = Booking::create($request->all()); /*otra forma de hacerlo*/
-
-        return redirect()->route('reservas.show', $reserva->id); 
     }
 
     /**
@@ -124,7 +151,7 @@ class BookingController extends Controller
         $caracteristica->price = $request->price;
 
         $caracteristica->save(); */
-        
+
         $array = $request->all();
         Arr::forget($array, 'domos');
         Arr::forget($array, 'servicios');

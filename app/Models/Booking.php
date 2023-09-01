@@ -9,6 +9,8 @@ class Booking extends Model
 {
     use HasFactory;
 
+    protected $guarded = [];
+
     //relacion uno a uno
     public function comment(){
         return $this->hasOne('App\Models\Comment');

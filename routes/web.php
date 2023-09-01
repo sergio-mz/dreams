@@ -65,10 +65,9 @@ Route::middleware([
 
     Route::get('/', HomeController::class)->name('home');
     Route::resource('clientes', CustomerController::class);
-    Route::resource('reservas', BookingController::class);
+    Route::resource('reservas', BookingController::class)->except(['create']);
+    Route::post('reservas/create', [BookingController::class, 'create'])->name('reservas.create');
     Route::get('/perfil', [ProfileController::class, 'show'])->name('perfil.show');
-    Route::get('/buscar-domos-disponibles', [BookingController::class, 'getAvailableDomos'])->name('buscar-domos-disponibles');
-    Route::get('/check-availability', [BookingController::class, 'showAvailabilityForm'])->name('availability.form');
-    Route::post('/check-availability', [BookingController::class, 'showAvailableDomes'])->name('availability.check');
+    Route::get('disponibilidad-domos', [BookingController::class, 'availableDomes'])->name('disponibilidad.domos');
 
 });

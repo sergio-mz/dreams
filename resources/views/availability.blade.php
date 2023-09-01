@@ -21,10 +21,10 @@
     <button type="submit">Verificar Disponibilidad</button>
 </form>
 
-@if(isset($startDate) && isset($endDate))
-    <h2>Domos disponibles para el período del {{ $startDate }} al {{ $endDate }}:</h2>
+@if(isset($fechaInicio) && isset($fechaFin))
+    <h2>Domos disponibles para el período del {{ $fechaInicio }} al {{ $fechaFin }}:</h2>
     <ul>
-        @foreach($availableDomes as $dome)
+        @foreach($domosDisponibles as $dome)
             <li>{{ $dome->name }}</li>
         @endforeach
     </ul>

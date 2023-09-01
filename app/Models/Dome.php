@@ -30,22 +30,22 @@ class Dome extends Model
             ->withPivot('price');
     }
 
-    public function scopeAvailableForDates($query, $startDate, $endDate)
+    public function scopeAvailableForDates($query, $fechaInicio, $fechaFin)
     {
-        return $query->whereDoesntHave('bookings', function ($query) use ($startDate, $endDate) {
-            $query->whereBetween('start_date', [$startDate, $endDate])
-                ->orWhereBetween('end_date', [$startDate, $endDate])
-                ->orWhere(function ($query) use ($startDate, $endDate) {
-                    $query->where('start_date', '<=', $startDate)
-                        ->where('end_date', '>=', $endDate);
+        return $query->whereDoesntHave('bookings', function ($query) use ($fechaInicio, $fechaFin) {
+            $query->whereBetween('start_date', [$fechaInicio, $fechaFin])
+                ->orWhereBetween('end_date', [$fechaInicio, $fechaFin])
+                ->orWhere(function ($query) use ($fechaInicio, $fechaFin) {
+                    $query->where('start_date', '<=', $fechaInicio)
+                        ->where('end_date', '>=', $fechaFin);
                 });
         })
-        ->orWhereDoesntHave('plans.bookings', function ($query) use ($startDate, $endDate) {
-            $query->whereBetween('start_date', [$startDate, $endDate])
-                ->orWhereBetween('end_date', [$startDate, $endDate])
-                ->orWhere(function ($query) use ($startDate, $endDate) {
-                    $query->where('start_date', '<=', $startDate)
-                        ->where('end_date', '>=', $endDate);
+        ->WhereDoesntHave('plans.bookings', function ($query) use ($fechaInicio, $fechaFin) {
+            $query->whereBetween('start_date', [$fechaInicio, $fechaFin])
+                ->orWhereBetween('end_date', [$fechaInicio, $fechaFin])
+                ->orWhere(function ($query) use ($fechaInicio, $fechaFin) {
+                    $query->where('start_date', '<=', $fechaInicio)
+                        ->where('end_date', '>=', $fechaFin);
                 });
         });
     }
