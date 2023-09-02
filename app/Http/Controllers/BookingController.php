@@ -70,7 +70,7 @@ class BookingController extends Controller
 
         $domesWithPrices = [];
         $planesWithPrices = [];
-        $servicesWithPrices = [];
+        $servicesWithPricesAndQuantity = [];
 
         foreach ($request->domes as $dome) {
             $price = Dome::find($dome)->price;
@@ -82,10 +82,10 @@ class BookingController extends Controller
             $valorplanes += $price;
             $planesWithPrices[$plan] = ['price' => $price];
         }
-        foreach ($request->services as $service) {
+        foreach ($request->services_q as $service => $quantity) {
             $price = Service::find($service)->price;
-            $valorservicios += $price;
-            $servicesWithPrices[$service] = ['price' => $price,'quantity' => "1"];
+            $valorservicios += $price*$quantity;
+            $servicesWithPricesAndQuantity[$service] = ['price' => $price,'quantity' => $quantity];
         }
         $subtotal = $valordomos + $valorplanes + $valorservicios;
         $total = $subtotal * (1 - ($request->discount) / 100) * (1 + ($request->tax) / 100);
@@ -107,10 +107,9 @@ class BookingController extends Controller
         } */
         $reserva->domes()->sync($domesWithPrices);
         $reserva->plans()->sync($planesWithPrices);
-        $reserva->services()->sync($servicesWithPrices);
+        $reserva->services()->sync($servicesWithPricesAndQuantity);
 
         return redirect()->route('reservas.show', $reserva->id);
-
     }
 
     /**
