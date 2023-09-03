@@ -57,13 +57,14 @@ class BookingController extends Controller
      */
     public function store(Request $request)
     {
-        /* $request->validate([
+        $request->validate([
         'start_date' => 'required',
         'end_date' => 'required',
         'customer_id' => 'required',
         'discount' => 'required',
         'tax' => 'required',
-        ]); */
+        ]);
+
         $valordomos = 0;
         $valorplanes = 0;
         $valorservicios = 0;
@@ -72,21 +73,30 @@ class BookingController extends Controller
         $planesWithPrices = [];
         $servicesWithPricesAndQuantity = [];
 
-        foreach ($request->domes as $dome) {
-            $price = Dome::find($dome)->price;
-            $valordomos += $price;
-            $domesWithPrices[$dome] = ['price' => $price];
+        if (isset($request->domes)) {
+            foreach ($request->domes as $dome) {
+                $price = Dome::find($dome)->price;
+                $valordomos += $price;
+                $domesWithPrices[$dome] = ['price' => $price];
+            }
         }
-        foreach ($request->plans as $plan) {
-            $price = Plan::find($plan)->price;
-            $valorplanes += $price;
-            $planesWithPrices[$plan] = ['price' => $price];
+
+        if (isset($request->plans)) {
+            foreach ($request->plans as $plan) {
+                $price = Plan::find($plan)->price;
+                $valorplanes += $price;
+                $planesWithPrices[$plan] = ['price' => $price];
+            }
         }
-        foreach ($request->services_q as $service => $quantity) {
-            $price = Service::find($service)->price;
-            $valorservicios += $price*$quantity;
-            $servicesWithPricesAndQuantity[$service] = ['price' => $price,'quantity' => $quantity];
+
+        if (isset($request->services_q)) {
+            foreach ($request->services_q as $service => $quantity) {
+                $price = Service::find($service)->price;
+                $valorservicios += $price * $quantity;
+                $servicesWithPricesAndQuantity[$service] = ['price' => $price, 'quantity' => $quantity];
+            }
         }
+
         $subtotal = $valordomos + $valorplanes + $valorservicios;
         $total = $subtotal * (1 - ($request->discount) / 100) * (1 + ($request->tax) / 100);
 
@@ -102,8 +112,8 @@ class BookingController extends Controller
         ]);
 
         /* foreach ($request->domes as $domeId) {
-            // Utiliza el método attach para agregar la relación con el precio
-            $reserva->domes()->attach($domeId, ['price' => Dome::find($dome)->price]);
+        // Utiliza el método attach para agregar la relación con el precio
+        $reserva->domes()->attach($domeId, ['price' => Dome::find($dome)->price]);
         } */
         $reserva->domes()->sync($domesWithPrices);
         $reserva->plans()->sync($planesWithPrices);

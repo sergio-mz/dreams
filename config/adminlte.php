@@ -293,11 +293,11 @@ return [
 
     'menu' => [
         // Navbar items:
-        [
+        /* [
             'text' => 'Link 1',
             'url'  => '#',
             'topnav' => true,
-        ],
+        ], */
         [
             'type'         => 'navbar-search',
             'text'         => 'search',
@@ -323,20 +323,20 @@ return [
             'route'  => 'home',
             'icon' => 'fas fa-fw fa-home'
         ],
-        [
+        /* [
             'text'        => 'pages',
             'url'         => 'admin/pages',
             'icon'        => 'far fa-fw fa-file',
             'label'       => 'Nuevo',
             'label_color' => 'danger',
-        ],
+        ], */
         ['header' => 'CONFIGURACIÓN DE CUENTA'],
         [
             'text' => 'Perfil',
             'route'  => 'perfil.show',
             'icon' => 'fas fa-fw fa-user',
         ],
-        [
+        /* [
             'text'    => 'multilevel',
             'icon'    => 'fas fa-fw fa-share',
             'submenu' => [
@@ -373,7 +373,7 @@ return [
                     'url'  => '#',
                 ],
             ],
-        ],
+        ], */
         ['header' => 'MODULOS'],
         [
             'text'       => 'Reservas',

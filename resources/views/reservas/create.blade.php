@@ -122,8 +122,8 @@
 
                 <div class="mb-2">
                     <label for="discount" class="form-label">Descuento(%):</label>
-                    <input type="number" name="discount" id="discount" class="form-control" step="0.01"
-                        value="{{ old('discount'), '0' }}">
+                    <input type="number" name="discount" id="discount" class="form-control"
+                        value="0" min="0">
                     @error('discount')
                         <small class="text-danger">{{ $message }}</small>
                     @enderror
@@ -131,8 +131,8 @@
 
                 <div class="mb-2">
                     <label for="tax" class="form-label">Impuesto(%):</label>
-                    <input type="number" name="tax" id="tax" class="form-control" step="0.01"
-                        value="{{ old('tax'), '19' }}">
+                    <input type="number" name="tax" id="tax" class="form-control"
+                        value="19"  min="0">
                     @error('tax')
                         <small class="text-danger">{{ $message }}</small>
                     @enderror
@@ -292,6 +292,7 @@
                         quantityInput.name = `services_q[${serviceId}]`;
                         quantityInput.placeholder = 'Cantidad';
                         quantityInput.min = 1; // Establece el mínimo en 1
+                        quantityInput.value = 1; // Establece el valor por defecto en 1
 
                         // Agrega el label y el campo de cantidad al contenedor
                         $('#quantity-inputs').append(label);
