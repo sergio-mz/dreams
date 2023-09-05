@@ -61,7 +61,7 @@
                 <div class="mb-2">
                     <label for="customer_id" class="form-label">Cliente:</label>
                     <select name="customer_id" id="customer_id"
-                        class="form-control{{--  chosen-select --}} custom-select-height">
+                        class="form-control custom-select-height">
                         <option value="">Seleccione</option>
                         @foreach ($clientes as $cliente)
                             <option value="{{ $cliente->id }}">{{ $cliente->document }}</option>

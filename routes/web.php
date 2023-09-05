@@ -69,5 +69,5 @@ Route::middleware([
     Route::post('reservas/create', [BookingController::class, 'create'])->name('reservas.create');
     Route::get('/perfil', [ProfileController::class, 'show'])->name('perfil.show');
     Route::get('disponibilidad-domos', [BookingController::class, 'availableDomes'])->name('disponibilidad.domos');
-
+    Route::post('/cantidad-servicio', [BookingController::class, 'getServiceQuantity'])->name('reservas.cantidadServicio');
 });

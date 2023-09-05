@@ -58,11 +58,11 @@ class BookingController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-        'start_date' => 'required',
-        'end_date' => 'required',
-        'customer_id' => 'required',
-        'discount' => 'required',
-        'tax' => 'required',
+            'start_date' => 'required',
+            'end_date' => 'required',
+            'customer_id' => 'required',
+            'discount' => 'required',
+            'tax' => 'required',
         ]);
 
         $valordomos = 0;
@@ -135,10 +135,29 @@ class BookingController extends Controller
      */
     public function edit(Booking $reserva)
     {
-        $domos = Dome::all(); // Obtener todos los domos
+        $fechaInicio = $reserva->start_date;
+        $fechaFin = $reserva->end_date;
+        $domosDisponibles = Dome::availableForDates($fechaInicio, $fechaFin)
+            ->get();
+        $planesDisponibles = Plan::availableForDates($fechaInicio, $fechaFin)
+            ->get();
         $servicios = Service::all(); // Obtener todos los servicios
-        $planes = Plan::all(); // Obtener todos los planes
-        return view('reservas.edit', compact('reserva', 'domos', 'servicios', 'planes'));
+
+        return view('reservas.edit', compact('reserva', 'domosDisponibles', 'servicios', 'planesDisponibles'));
+        /* return  $reserva->services->where('id', '1')->first()->pivot->quantity; */
+    }
+
+    public function getServiceQuantity(Request $request)
+    {
+        $serviceId = $request->input('serviceId');
+        $reservaId = json_decode($request->input('reservaId'));
+
+        $reserva = Booking::find($reservaId);
+
+        // Realiza la consulta para obtener la cantidad del servicio
+        $cantidadServicio = $reserva->services->where('id', $serviceId)->first()->pivot->quantity;
+
+        return response()->json(['cantidad' => $cantidadServicio]);
     }
 
     /**
@@ -147,28 +166,56 @@ class BookingController extends Controller
     public function update(Request $request, Booking $reserva)
     {
         $request->validate([
-            'name' => 'required',
-            'price' => 'required',
-            'status' => 'required',
-            'description' => 'required',
+            'discount' => 'required',
+            'tax' => 'required',
         ]);
 
-        /*
-        $caracteristica->name = $request->name;
-        $caracteristica->status = $request->status;
-        $caracteristica->description = $request->description;
-        $caracteristica->price = $request->price;
+        $valordomos = 0;
+        $valorplanes = 0;
+        $valorservicios = 0;
 
-        $caracteristica->save(); */
+        $domesWithPrices = [];
+        $planesWithPrices = [];
+        $servicesWithPricesAndQuantity = [];
 
-        $array = $request->all();
-        Arr::forget($array, 'domos');
-        Arr::forget($array, 'servicios');
-        $reserva->update($array); /*otra forma de hacerlo*/
+        if (isset($request->domes)) {
+            foreach ($request->domes as $dome) {
+                $price = Dome::find($dome)->price;
+                $valordomos += $price;
+                $domesWithPrices[$dome] = ['price' => $price];
+            }
+        }
 
-        // Actualizar los domos y servicios asignados al Booking
-        $reserva->domes()->sync($request->input('domos', []));
-        $reserva->services()->sync($request->input('servicios', []));
+        if (isset($request->plans)) {
+            foreach ($request->plans as $plan) {
+                $price = Plan::find($plan)->price;
+                $valorplanes += $price;
+                $planesWithPrices[$plan] = ['price' => $price];
+            }
+        }
+
+        if (isset($request->services_q)) {
+            foreach ($request->services_q as $service => $quantity) {
+                $price = Service::find($service)->price;
+                $valorservicios += $price * $quantity;
+                $servicesWithPricesAndQuantity[$service] = ['price' => $price, 'quantity' => $quantity];
+            }
+        }
+
+        $subtotal = $valordomos + $valorplanes + $valorservicios;
+        $total = $subtotal * (1 - ($request->discount) / 100) * (1 + ($request->tax) / 100);
+
+        $reserva->update([
+            'user_id' => Auth::user()->id,
+            'subtotal' => $subtotal,
+            'discount' => $request->discount,
+            'tax' => $request->tax,
+            'total' => $total,
+        ]);
+
+        $reserva->domes()->sync($domesWithPrices);
+        $reserva->plans()->sync($planesWithPrices);
+        $reserva->services()->sync($servicesWithPricesAndQuantity);
 
         return redirect()->route('reservas.show', $reserva->id);
     }
