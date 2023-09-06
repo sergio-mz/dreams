@@ -66,7 +66,7 @@ return [
     */
 
     'logo' => '<b>Dreams</b>Glamping',
-    'logo_img' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
+    'logo_img' => 'assets/logop.jpg',
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
     'logo_img_xl_class' => 'brand-image-xs',
@@ -88,7 +88,7 @@ return [
     'auth_logo' => [
         'enabled' => false,
         'img' => [
-            'path' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
+            'path' => 'assets/logop.jpg',
             'alt' => 'Auth Logo',
             'class' => '',
             'width' => 50,
@@ -111,11 +111,11 @@ return [
     'preloader' => [
         'enabled' => false,
         'img' => [
-            'path' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
+            'path' => 'assets/logop.jpg',
             'alt' => 'AdminLTE Preloader Image',
             'effect' => 'animation__shake',
-            'width' => 60,
-            'height' => 60,
+            'width' => 600,
+            'height' => 600,
         ],
     ],
 
@@ -136,7 +136,7 @@ return [
     'usermenu_header_class' => 'bg-info',
     'usermenu_image' => true,
     'usermenu_desc' => true,
-    'usermenu_profile_url' => true,
+    'usermenu_profile_url' => false,
 
     /*
     |--------------------------------------------------------------------------
@@ -298,11 +298,11 @@ return [
             'url'  => '#',
             'topnav' => true,
         ], */
-        [
+        /* [
             'type'         => 'navbar-search',
             'text'         => 'search',
             'topnav_right' => true,
-        ],
+        ], */
         [
             'type'         => 'fullscreen-widget',
             'topnav_right' => true,
@@ -384,6 +384,7 @@ return [
         ],
         [
             'text'       => 'Usuarios',
+            'icon' => 'fas fa-users',
             'icon_color' => 'red',
             'route'        => 'usuarios.index',
             'can'        => 'usuarios.index',
