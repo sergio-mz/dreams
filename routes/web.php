@@ -65,6 +65,7 @@ Route::middleware([
 
     Route::get('/', HomeController::class)->name('home');
     Route::resource('clientes', CustomerController::class);
+    Route::resource('pagos', CustomerController::class);
     Route::resource('reservas', BookingController::class)->except(['create']);
     Route::post('reservas/create', [BookingController::class, 'create'])->name('reservas.create');
     Route::get('/perfil', [ProfileController::class, 'show'])->name('perfil.show');

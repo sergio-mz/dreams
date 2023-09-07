@@ -189,7 +189,7 @@ return [
     */
 
     'classes_body' => '',
-    'classes_brand' => 'bg-white',
+    'classes_brand' => 'bg-info',
     'classes_brand_text' => '',
     'classes_content_wrapper' => '',
     'classes_content_header' => '',
@@ -321,7 +321,7 @@ return [
         [
             'text' => 'Dashboard',
             'route'  => 'home',
-            'icon' => 'fas fa-fw fa-home'
+            'icon' => 'fas fa-fw fa-chart-bar'
         ],
         /* [
             'text'        => 'pages',
@@ -377,7 +377,7 @@ return [
         ['header' => 'MODULOS'],
         [
             'text'       => 'Reservas',
-            'icon' => 'fas fa-users-cog fa-fw',
+            'icon' => 'fas fa-home fa-fw',
             'icon_color' => 'red',
             'route'        => 'reservas.index',
             'can'        => 'reservas.index',
@@ -399,39 +399,52 @@ return [
         
         [
             'text'       => 'Características',
+            'icon' => 'fas fa-cogs fa-fw',
             'icon_color' => 'red',
             'route'        => 'caracteristicas.index',
             'can'        => 'caracteristicas.index',
         ],
         [
             'text'       => 'Clientes',
+            'icon' => 'fas fa-users fa-fw',
             'icon_color' => 'red',
             'route'        => 'clientes.index',
             'can'        => 'clientes.index',
         ],
         [
             'text'       => 'Métodos',
+            'icon' => 'fas fa-credit-card fa-fw',
             'icon_color' => 'red',
             'route'        => 'metodos.index',
             'can'        => 'metodos.index',
         ],
         [
             'text'       => 'Servicios',
+            'icon' => 'fas fa-wrench fa-fw',
             'icon_color' => 'red',
             'route'        => 'servicios.index',
             'can'        => 'servicios.index',
         ],
         [
             'text'       => 'Domos',
+            'icon' => 'fas fa-home fa-fw',
             'icon_color' => 'red',
             'route'        => 'domos.index',
             'can'        => 'domos.index',
         ],
         [
             'text'       => 'Planes',
+            'icon' => 'fas fa-list-ul fa-fw',
             'icon_color' => 'red',
             'route'        => 'planes.index',
             'can'        => 'planes.index',
+        ],
+        [
+            'text'       => 'Pagos',
+            'icon' => 'fas fa-money-bill fa-fw',
+            'icon_color' => 'red',
+            'route'        => 'planes.index',
+            'can'        => 'pagos.index',
         ],
     ],
 
