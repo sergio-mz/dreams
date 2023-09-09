@@ -23,7 +23,7 @@
             @enderror
         </div>
 
-        <button type="submit" class="btn btn-primary">Actualizar Rol</button>
+        <button type="submit" class="btn btn-primary">Actualizar Método</button>
     </form>
 </div>
 

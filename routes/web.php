@@ -5,6 +5,7 @@ use App\Http\Controllers\CharacteristicController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DomeController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\PayMethodController;
 use App\Http\Controllers\PlanController;
 use App\Http\Controllers\ProfileController;
@@ -65,10 +66,15 @@ Route::middleware([
 
     Route::get('/', HomeController::class)->name('home');
     Route::resource('clientes', CustomerController::class);
-    Route::resource('pagos', CustomerController::class);
+
+    Route::resource('pagos', PaymentController::class)->except(['create']);
+    Route::post('pagos/create', [PaymentController::class, 'create'])->name('pagos.create');
+    Route::get('active-bookings', [PaymentController::class, 'activeBookings'])->name('pagos.activeBookings');
+
     Route::resource('reservas', BookingController::class)->except(['create']);
     Route::post('reservas/create', [BookingController::class, 'create'])->name('reservas.create');
-    Route::get('/perfil', [ProfileController::class, 'show'])->name('perfil.show');
     Route::get('disponibilidad-domos', [BookingController::class, 'availableDomes'])->name('disponibilidad.domos');
     Route::post('/cantidad-servicio', [BookingController::class, 'getServiceQuantity'])->name('reservas.cantidadServicio');
+
+    Route::get('/perfil', [ProfileController::class, 'show'])->name('perfil.show');
 });

@@ -16,9 +16,9 @@ class Booking extends Model
         return $this->hasOne('App\Models\Comment');
     }
 
-    //relacion uno a uno
-    public function receipt(){
-        return $this->hasOne('App\Models\Receipt');
+    //relacion uno a muchos
+    public function payments(){
+        return $this->hasMany('App\Models\Payment');
     }
 
     //relacion muchos a muchos

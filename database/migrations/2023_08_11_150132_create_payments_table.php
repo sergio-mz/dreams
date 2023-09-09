@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('receipts', function (Blueprint $table) {
+        Schema::create('payments', function (Blueprint $table) {
             $table->id();
 
             $table->unsignedBigInteger('booking_id');
@@ -21,10 +21,7 @@ return new class extends Migration
             $table->foreign('pay_method_id')->references('id')->on('pay_methods')
                 ->onUpdate('cascade');
 
-            $table->decimal('subtotal', 10, 2);
-            $table->decimal('discount', 10, 2);
-            $table->decimal('tax', 10, 2);
-            $table->decimal('total', 10, 2);
+            $table->decimal('value', 10, 2);
 
             $table->timestamps();
         });
@@ -35,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('receipts');
+        Schema::dropIfExists('payments');
     }
 };

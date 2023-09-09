@@ -68,5 +68,10 @@ class RoleSeeder extends Seeder
         Permission::create(['name' => 'usuarios.create','description' => 'Crear usuario'])->assignRole('Admin');
         Permission::create(['name' => 'usuarios.edit','description' => 'Editar usuario'])->assignRole('Admin');
         Permission::create(['name' => 'usuarios.destroy','description' => 'Eliminar usuario'])->assignRole('Admin');
+
+        Permission::create(['name' => 'pagos.index','description' => 'Ver listado de pagos'])->syncRoles('Admin','Asistente');
+        Permission::create(['name' => 'pagos.create','description' => 'Crear pago'])->syncRoles('Admin','Asistente');
+        Permission::create(['name' => 'pagos.edit','description' => 'Editar pago'])->syncRoles('Admin','Asistente');
+        Permission::create(['name' => 'pagos.destroy','description' => 'Eliminar pago'])->syncRoles('Admin','Asistente');
     }
 }

@@ -443,7 +443,7 @@ return [
             'text'       => 'Pagos',
             'icon' => 'fas fa-money-bill fa-fw',
             'icon_color' => 'red',
-            'route'        => 'planes.index',
+            'route'        => 'pagos.index',
             'can'        => 'pagos.index',
         ],
     ],
