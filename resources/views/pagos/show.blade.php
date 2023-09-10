@@ -14,6 +14,7 @@
         @can('pagos.edit')
         <a href="{{ route('pagos.edit', $pago) }}" class="btn btn-warning mb-2">Editar Pago</a>
         @endcan
+        <a href="{{ route('pagos.pdf', $pago) }}" class="btn btn-warning mb-2">PDF</a>
 
         <div class="card mb-1 p-2 pl-4">
             <h5 class="card-title"><strong>Número de pago</strong></h5>

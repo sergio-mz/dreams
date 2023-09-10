@@ -70,6 +70,7 @@ Route::middleware([
     Route::resource('pagos', PaymentController::class)->except(['create']);
     Route::post('pagos/create', [PaymentController::class, 'create'])->name('pagos.create');
     Route::get('active-bookings', [PaymentController::class, 'activeBookings'])->name('pagos.activeBookings');
+    Route::get('pdf/{pago}', [PaymentController::class, 'pdf'])->name('pagos.pdf');
 
     Route::resource('reservas', BookingController::class)->except(['create']);
     Route::post('reservas/create', [BookingController::class, 'create'])->name('reservas.create');

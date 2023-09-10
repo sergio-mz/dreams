@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Booking;
 use App\Models\Payment;
 use App\Models\PayMethod;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 
 class PaymentController extends Controller
@@ -77,6 +78,13 @@ class PaymentController extends Controller
     public function show(Payment $pago)
     {
         return view('pagos.show', ['pago' => $pago]);
+    }
+
+    public function pdf(Payment $pago)
+    {
+        $pdf = Pdf::loadView('pagos.pdf', compact('pago'));
+        return $pdf->download('pago.pdf');
+        /* return view('pagos.pdf', ['pago' => $pago]); */
     }
 
     /**
