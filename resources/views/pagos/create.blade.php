@@ -50,17 +50,17 @@
 
                 <div class="card mb-1 p-2 pl-4">
                     <h5 class="card-title"><strong>Valor Total</strong></h5>
-                    <p class="card-text">{{ $esta_reserva->total }}</p>
+                    <p class="card-text">$ {{ number_format($esta_reserva->total, 0, ',', '.') }}</p>
                 </div>
 
                 <div class="card mb-1 p-2 pl-4">
                     <h5 class="card-title"><strong>Pagos Realizados</strong></h5>
-                    <p class="card-text">{{ $abonos }}</p>
+                    <p class="card-text">$ {{ number_format($abonos, 0, ',', '.') }}</p>
                 </div>
 
                 <div class="card mb-1 p-2 pl-4">
                     <h5 class="card-title"><strong>Saldo</strong></h5>
-                    <p class="card-text">$ {{ $saldo }}</p>
+                    <p class="card-text">$ {{ number_format($saldo, 0, ',', '.') }}</p>
                 </div>
 
                 <input type="number" name="saldo" value="{{ $saldo }}" style="display: none;">

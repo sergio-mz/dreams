@@ -82,17 +82,37 @@ class PaymentController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Payment $payment)
+    public function edit(Payment $pago)
     {
-        //
+        $esta_reserva = Booking::find($pago->booking_id);
+        $abonos = $esta_reserva->payments()->sum('value') - $pago->value;
+        $saldo = $esta_reserva->total - $abonos;
+
+        $metodos = PayMethod::all();
+        return view('pagos.edit', compact('pago', 'esta_reserva', 'abonos', 'saldo', 'metodos'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Payment $payment)
+    public function update(Request $request, Payment $pago)
     {
-        //
+        $value = $request->total;
+
+        if ($request->total == 'partial') {
+            $value = $request->partial;
+        }
+
+        if ($value > 0) {
+            $pago->update([
+                'pay_method_id' => $request->pay_method_id,
+                'value' => $value,
+            ]);
+
+            return redirect()->route('pagos.show', $pago->id);
+        } else {
+            return redirect()->route('pagos.index');
+        }
     }
 
     /**

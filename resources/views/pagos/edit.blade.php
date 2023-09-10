@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Planes')
+@section('title', 'Pagos')
 
 @section('content_header')
     <h1></h1>
@@ -9,81 +9,73 @@
 @section('content')
 
     <div class="container">
-        <h1 class="mb-4">Editar Plan</h1>
-        <a href="{{ route('planes.index') }}" class="btn btn-secondary mb-2">Volver a Planes</a>
-        <form action="{{ route('planes.update', $plane) }}" method="POST">
+        <h1 class="mb-4">Editar Pago</h1>
+        <a href="{{ route('pagos.index') }}" class="btn btn-secondary mb-2">Volver a Pagos</a>
+        <form action="{{ route('pagos.update', $pago) }}" method="POST">
             @csrf {{-- Agrega un input oculto con un token para temas de seguridad --}}
             @method('put') {{-- Como HTML no entiende el método "put", aquí lo especifico --}}
 
-            <div class="mb-2">
-                <label for="name" class="form-label">Nombre:</label>
-                <input type="text" name="name" id="name" class="form-control"
-                    value="{{ old('name', $plane->name) }}">
-                @error('name')
-                    <small class="text-danger">{{ $message }}</small>
-                @enderror
+            <div class="card mb-1 p-2 pl-4">
+                <h5 class="card-title"><strong>Número de Reserva</strong></h5>
+                <p class="card-text">{{ $esta_reserva->id }}</p>
+            </div>
+
+            <div class="card mb-1 p-2 pl-4">
+                <h5 class="card-title"><strong>Valor Total</strong></h5>
+                <p class="card-text">$ {{ number_format($esta_reserva->total, 0, ',', '.') }}</p>
+            </div>
+
+            <div class="card mb-1 p-2 pl-4">
+                <h5 class="card-title"><strong>Pagos Realizados</strong></h5>
+                <p class="card-text">$ {{ number_format($abonos, 0, ',', '.') }}</p>
+            </div>
+
+            <div class="card mb-1 p-2 pl-4">
+                <h5 class="card-title"><strong>Saldo</strong></h5>
+                <p class="card-text">$ {{ number_format($saldo, 0, ',', '.') }}</p>
             </div>
 
             <div class="mb-2">
-                <label for="status" class="form-label mr-3">Estado:</label>
-                <select name="status" id="status" class="form-select">
-                    <option value="1" {{ $plane->status === 1 ? 'selected' : '' }}>Activo</option>
-                    <option value="0" {{ $plane->status === 0 ? 'selected' : '' }}>Inactivo</option>
+                <label for="pay_method_id" class="form-label">Método de Pago:</label>
+                <select name="pay_method_id" id="pay_method_id" class="form-control">
+                    @foreach ($metodos as $metodo)
+                        <option value="{{ $metodo->id }}" {{ $pago->pay_method_id == $metodo->id ? 'selected' : '' }}>
+                            {{ $metodo->name }}
+                        </option>
+                    @endforeach
                 </select>
-                @error('status')
-                    <small class="text-danger">{{ $message }}</small>
-                @enderror
-            </div>
-
-            <div class="mb-3">
-                <label for="price" class="form-label">Precio:</label>
-                <input type="number" name="price" id="price" class="form-control" step="0.01"
-                    value="{{ old('price', $plane->price) }}">
-                @error('price')
+                @error('pay_method_id')
                     <small class="text-danger">{{ $message }}</small>
                 @enderror
             </div>
 
             <div class="mb-2">
-                <label for="description" class="form-label">Descripción:</label>
-                <textarea name="description" id="description" class="form-control" rows="3">{{ old('description', $plane->description) }}</textarea>
-                @error('description')
+                <label class="form-label">Valor a Pagar:</label>
+                <div>
+                    <label class="role-label">
+                        <input type="radio" name="total" value="{{ $saldo }}" checked>
+                        Pago Total: $ {{ $saldo }}
+                    </label> <br>
+                    <label class="role-label">
+                        <input type="radio" name="total" value="partial">
+                        Pago Parcial
+                    </label>
+                </div>
+            </div>
+
+            <div class="mb-2">
+                <!-- Campo de entrada para Pago Parcial (inicialmente oculto) -->
+                <div id="partial-payment-field">
+                    <label for="partial">Monto del Pago Parcial:</label>
+                    <input type="number" name="partial" id="partial" class="form-control" value="0" min="0"
+                        max="{{ $saldo }}">
+                </div>
+                @error('partial')
                     <small class="text-danger">{{ $message }}</small>
                 @enderror
             </div>
 
-            <div class="form-group">
-                <label>Domo:</label>
-                @error('dome_id')
-                    <small class="text-danger">{{ $message }}</small>
-                @enderror
-                <div>
-                    @foreach ($domos as $domo)
-                        <label class="domo-label">
-                            <input type="radio" name="dome_id" value="{{ $domo->id }}"
-                                {{ $plane->dome_id == $domo->id ? 'checked' : '' }}>
-                            {{ $domo->name }}
-                        </label>
-                        <br>
-                    @endforeach
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label>Servicios:</label>
-                <div>
-                    @foreach ($servicios as $servicio)
-                        <label class="servicio-label">
-                            <input type="checkbox" name="servicios[]" value="{{ $servicio->id }}"
-                                {{ $plane->services->contains($servicio->id) ? 'checked' : '' }}>
-                            {{ $servicio->name }}
-                        </label>
-                        <br>
-                    @endforeach
-                </div>
-            </div>
-
-            <button type="submit" class="btn btn-primary">Actualizar plan</button>
+            <button type="submit" class="btn btn-primary">Actualizar Pago</button>
         </form>
     </div>
 
@@ -91,10 +83,46 @@
 
 @section('css')
     <link rel="stylesheet" href="/css/admin_custom.css">
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
 @stop
 
 @section('js')
     <script>
         console.log('Hi!');
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+
+            // Inicializa select2
+            $('#booking').select2({
+                // Personaliza el mensaje cuando no se encuentran resultados
+                language: {
+                    noResults: function() {
+                        return 'No se encontraron resultados';
+                    }
+                },
+                placeholder: 'Selecciona el número de reserva'
+            });
+
+            /* ***Pagos Parciales*** */
+            // Ocultar el campo de entrada al cargar la página
+            $('#partial-payment-field').hide();
+
+            // Escuchar cambios en la selección del radio button
+            $('input[type=radio][name=total]').change(function() {
+                if (this.value === 'partial') {
+                    // Mostrar el campo de entrada cuando se selecciona "Pago Parcial"
+                    $('#partial-payment-field').show();
+                } else {
+                    // Ocultar el campo de entrada cuando se selecciona "Pago Total"
+                    $('#partial-payment-field').hide();
+                }
+            });
+        });
     </script>
 @stop

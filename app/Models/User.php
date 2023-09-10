@@ -3,14 +3,15 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Notifications\ResetPasswordNotification;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Auth;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
-use Illuminate\Support\Facades\Auth;
 
 class User extends Authenticatable
 {
@@ -62,12 +63,25 @@ class User extends Authenticatable
         'profile_photo_url',
     ];
 
+    /**
+     * Send the password reset notification.
+     *
+     * @param  string  $token
+     * @return void
+     */
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new ResetPasswordNotification($token));
+    }
+
     //relacion uno a muchos
-    public function bookings(){
+    public function bookings()
+    {
         return $this->hasMany('App\Models\Booking');
     }
 
-    public function adminlte_image(){
+    public function adminlte_image()
+    {
         return 'https://picsum.photos/300/300';
     }
 
