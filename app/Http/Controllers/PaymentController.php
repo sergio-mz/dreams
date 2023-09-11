@@ -82,7 +82,11 @@ class PaymentController extends Controller
 
     public function pdf(Payment $pago)
     {
-        $pdf = Pdf::loadView('pagos.pdf', compact('pago'));
+        $esta_reserva = Booking::find($pago->booking_id);
+        $abonos = $esta_reserva->payments()->sum('value');
+        $saldo = $esta_reserva->total - $abonos;
+
+        $pdf = Pdf::loadView('pagos.pdf', compact('pago', 'saldo'));
         return $pdf->download('pago.pdf');
         /* return view('pagos.pdf', ['pago' => $pago]); */
     }

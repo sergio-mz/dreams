@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Dome;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -9,6 +10,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class DomeFactory extends Factory
 {
+    protected $model = Dome::class;
     /**
      * Define the model's default state.
      *
@@ -17,7 +19,12 @@ class DomeFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'name' => $this->faker->unique()->word,
+            'status' => $this->faker->boolean,
+            'price' => $this->faker->randomFloat(2, 10, 1000),
+            'location' => $this->faker->address,
+            'description' => $this->faker->paragraph,
+            'capacity' => $this->faker->numberBetween(1, 100),
         ];
     }
 }

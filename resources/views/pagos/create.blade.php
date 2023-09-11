@@ -41,7 +41,7 @@
 
                 <div class="mb-2">
                     <label for="booking_id" class="form-label">Número de Reserva:</label>
-                    <input type="number" name="booking_id" id="booking_id" class="form-control" value="{{ $reserva->id }}"
+                    <input type="number" name="booking_id" id="booking_id" class="form-control" value="{{ $esta_reserva->id }}"
                         style="display: none;">
                     @error('booking_id')
                         <small class="text-danger">{{ $message }}</small>

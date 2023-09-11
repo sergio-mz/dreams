@@ -319,7 +319,7 @@ return [
             'can'  => 'manage-blog',
         ],
         [
-            'text' => 'Dashboard',
+            'text' => 'Indicadores',
             'route'  => 'home',
             'icon' => 'fas fa-fw fa-chart-bar'
         ],

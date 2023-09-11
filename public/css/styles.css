@@ -1,0 +1,238 @@
+/* styles.css */
+p {
+    text-align: justify;
+  }
+
+  h2 {
+    text-align: center;
+    color: #444444;
+  }
+
+  .col-sm-9 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .titulo {
+    font-size: 50px;
+    font-family:Georgia, 'Times New Roman', Times, serif
+  }
+
+  .img-fluid {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* tarjetas del mismo tamaño */
+  .card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .card-img-top {
+    flex: 1 0 auto;
+  }
+
+  .card-body {
+    flex: 0 1 auto;
+  }
+
+   /* Estilos para las tarjetas de servicios */
+   .servicio-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+  }
+
+  .servicio-card .card-body {
+    flex-grow: 1;
+  }
+
+/* Estilos adicionales para la sección "Quienes Somos" */
+#quienes-somos {
+    background-color: #f9f9f9;
+    padding: 50px;
+  }
+  
+  #quienes-somos p {
+    font-size: 18px;
+    line-height: 1.6;
+  }
+  
+  /* Estilos adicionales para los domos */
+  #domos {
+    background-color: #fff;
+    padding: 50px;
+  }
+  
+  #domos h3 {
+    color: #333;
+  }
+  
+  #domos p {
+    font-size: 16px;
+  }
+  
+  #domos .img-fluid {
+    margin-top: 20px;
+  }
+
+  /* Estilos para la sección de Servicios */
+  #servicios {
+    background-color: #f9f9f9;
+    padding: 80px 0;
+  }
+
+  #servicios h2 {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
+  .servicio-card {
+    background-color: #fff;
+    padding: 30px;
+    margin-bottom: 30px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+
+  .servicio-card img {
+    max-width: 100%;
+    border-radius: 5px;
+    margin-bottom: 20px;
+  }
+
+  .servicio-card h3 {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+
+  .servicio-card p {
+    font-size: 16px;
+    line-height: 1.5;
+    margin-bottom: 20px;
+  }
+
+  /* Estilos para la sección de Planes */
+  #planes {
+    background-color: #f2f2f2;
+    padding: 80px 0;
+  }
+
+  #planes h2 {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
+  .plan-card {
+    background-color: #fff;
+    padding: 30px;
+    margin-bottom: 30px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+
+  .plan-card img {
+    max-width: 100%;
+    border-radius: 5px;
+    margin-bottom: 20px;
+  }
+
+  .plan-card h3 {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+
+  .plan-card p {
+    font-size: 16px;
+    line-height: 1.5;
+    margin-bottom: 20px;
+  }
+
+  /* Estilos para la sección del formulario */
+  #contacto {
+    background-color: #f9f9f9;
+    padding: 80px 0;
+  }
+
+  #contacto h2 {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
+  .contacto-form {
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  .form-group {
+    margin-bottom: 20px;
+  }
+
+  .form-group label {
+    display: block;
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+
+  .form-control {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+
+  .form-control:focus {
+    outline: none;
+    border-color: #66afe9;
+    box-shadow: 0 0 5px #66afe9;
+  }
+
+  textarea.form-control {
+    resize: vertical;
+    min-height: 100px;
+  }
+
+  .btn-primary {
+    display: block;
+    margin-left:35% ;
+    width: 30%;
+    padding: 10px;
+    font-size: 16px;
+    text-align: center;
+    background-color: #6d6d6d;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+
+  }
+
+  .btn-primary:hover {
+    background-color: #0056b3;
+  }
+
+  /* Estilos para la sección del formulario */
+  #contacto {
+    background-color: #f9f9f9;
+    padding: 80px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .contacto-form {
+    max-width: 500px;
+  }
+
+  /* Estilos para el botón "Reservar ahora" */
+  .reserva-container {
+    text-align: center;
+    margin-top: 40px;
+  }
+  

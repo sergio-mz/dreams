@@ -18,7 +18,7 @@ class BookingController extends Controller
      */
     public function index()
     {
-        $reservas = Booking::orderBy('id', 'asc')->paginate();
+        $reservas = Booking::orderBy('id', 'asc')->get();
         return view('reservas.index', compact('reservas'));
     }
 

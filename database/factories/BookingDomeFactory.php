@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Booking;
+use App\Models\Dome;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -16,8 +18,13 @@ class BookingDomeFactory extends Factory
      */
     public function definition(): array
     {
+        $dome = Dome::inRandomOrder()->first();
         return [
-            //
+            'booking_id' => function () {
+                return Booking::inRandomOrder()->first()->id;
+            },
+            'dome_id' => $dome->id,
+            'price' => $dome->price,
         ];
     }
 }

@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Booking;
+use App\Models\Service;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -16,8 +18,15 @@ class BookingServiceFactory extends Factory
      */
     public function definition(): array
     {
+        $service = Service::inRandomOrder()->first();
+        $quantity = $this->faker->numberBetween(1, 3);
         return [
-            //
+            'booking_id' => function () {
+                return Booking::inRandomOrder()->first()->id;
+            },
+            'service_id' => $service->id,
+            'price' => $service->price, // Utiliza el precio del servicio asociado al ID de servicio
+            'quantity' => $quantity,
         ];
     }
 }

@@ -20,5 +20,13 @@ class DatabaseSeeder extends Seeder
             'email' => 'admin@example.net',
             'password' => bcrypt('12345678'),
         ])->assignRole('Admin');
+
+        \App\Models\Dome::factory(10)->create();
+        \App\Models\Customer::factory(50)->create();
+        \App\Models\Service::factory(5)->create();
+        \App\Models\Plan::factory(5)->create();
+        \App\Models\Booking::factory(100)->create();
+        \App\Models\BookingDome::factory(100)->create();
+        \App\Models\BookingService::factory(100)->create();
     }
 }

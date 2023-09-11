@@ -28,6 +28,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/registrar', function () {
     return view('welcome');
 });
+Route::get('/', function () {
+    return view('index');
+})->name('inicio');
 
 Route::middleware([
     'auth:web',
@@ -64,7 +67,7 @@ Route::middleware([
         return view('dashboard');
     })->name('dashboard');
 
-    Route::get('/', HomeController::class)->name('home');
+    Route::get('/home', HomeController::class)->name('home');
     Route::resource('clientes', CustomerController::class);
 
     Route::resource('pagos', PaymentController::class)->except(['create']);
