@@ -15,7 +15,7 @@
 
         <div class="card mb-1 p-2 pl-4">
             <h5 class="card-title"><strong>Cliente</strong></h5>
-            <p class="card-text">{{ $reserva->customer_id }}</p>
+            <p class="card-text">{{ $reserva->customer->document }}</p>
         </div>
 
         <div class="card mb-1 p-2 pl-4">
@@ -57,7 +57,7 @@
 
         <div class="card mb-1 p-2 pl-4">
             <h5 class="card-title"><strong>Usuario</strong></h5>
-            <p class="card-text">{{ $reserva->user_id }}</p>
+            <p class="card-text">{{ $reserva->user->name }} ({{$reserva->user->roles->first()->name}})</p>
         </div>
 
         <form action="{{ route('reservas.destroy', $reserva) }}" method="POST" class="mt-2">

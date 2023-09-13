@@ -6,13 +6,15 @@
     <h1></h1>
 @stop
 
+@section('plugins.Datatables', true)
+
 @section('content')
 
 <div class="container">
     <h1 class="text-2xl font-semibold mb-4">Usuarios</h1>
     <a href="{{ route('usuarios.create') }}" class="btn btn-primary mb-3">Crear Usuario</a>
     
-    <table class="table">
+    <table class="table"  id="tablaUsuarios">
         <thead class="bg-gray-200">
             <tr>
                 <th class="text-uppercase text-muted font-weight-bold align-middle">Usuario</th>
@@ -24,7 +26,7 @@
                 <tr class="bg-white border">
                     <td class="align-middle">
                         <ul class="list-unstyled mb-1 pl-2">
-                            <li><strong><a href="{{ route('usuarios.show', $usuario) }}">{{ $usuario->name }}</a></strong></li>
+                            <li><strong><a href="{{ route('usuarios.show', $usuario) }}">{{ $usuario->name }} {{ $usuario->last_name }}</a></strong></li>
                         </ul>
                     </td>
                     <td class="align-middle">
@@ -42,15 +44,40 @@
         </tbody>
     </table>
 
-    {{ $usuarios->links() }}
 </div>
 
 @stop
 
 @section('css')
     <link rel="stylesheet" href="/css/admin_custom.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.bootstrap4.min.css">
+
 @stop
 
 @section('js')
-    <script> console.log('Hi!'); </script>
+<script> console.log('Hi!'); </script>
+
+<script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.5.0/js/responsive.bootstrap4.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+        $('#tablaUsuarios').DataTable({
+            responsive: true,
+            autoWidth: false,
+            language: {
+                info: 'Página _PAGE_ de _PAGES_',
+                infoEmpty: 'Sin registros disponibles',
+                infoFiltered: '(filtrado de _MAX_ registros totales)',
+                lengthMenu: 'Mostrar _MENU_ registros por página',
+                zeroRecords: 'Nada encontrado - disculpa',
+                search: 'Buscar:',
+                paginate: {
+                    next: 'Siguiente',
+                    previous: 'Anterior'
+                }
+            }
+        });
+    });
+</script>
 @stop

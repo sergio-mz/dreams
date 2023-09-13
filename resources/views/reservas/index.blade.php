@@ -20,7 +20,7 @@
     <table class="table" id="tablaReservas">
         <thead class="bg-gray-200">
             <tr>
-                <th class="text-uppercase text-muted font-weight-bold align-middle">ID</th>
+                <th class="text-uppercase text-muted font-weight-bold align-middle">Código</th>
                 <th class="text-uppercase text-muted font-weight-bold align-middle">Cliente</th>
                 <th class="text-uppercase text-muted font-weight-bold align-middle">Fecha</th>
                 <th class="text-center text-uppercase text-muted" style="width: 100px;">Acciones</th>
@@ -36,7 +36,7 @@
                     </td>
                     <td class="align-middle">
                         <ul class="list-unstyled mb-1 pl-2">
-                            <li><strong><a href="{{ route('reservas.show', $reserva) }}">{{ $reserva->customer_id }}</a></strong></li>
+                            <li><strong><a href="{{ route('reservas.show', $reserva) }}">{{ $reserva->customer->document }}</a></strong></li>
                         </ul>
                     </td>
                     <td class="align-middle">
