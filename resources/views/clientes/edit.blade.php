@@ -57,7 +57,7 @@
 
         <div class="mb-2">
             <label for="birthdate" class="form-label">Fecha de nacimiento:</label>
-            <input type="date" name="birthdate" id="birthdate" class="form-control" value="{{ old('birthdate', $cliente->birthdate) }}">
+            <input type="date" name="birthdate" id="birthdate" class="form-control" value="{{ old('birthdate', $cliente->birthdate) }}" max="{{ date('Y-m-d', strtotime('-18 years')) }}">
             @error('birthdate')
                 <small class="text-danger">{{ $message }}</small>
             @enderror

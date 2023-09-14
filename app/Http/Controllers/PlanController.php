@@ -15,7 +15,7 @@ class PlanController extends Controller
      */
     public function index()
     {
-        $planes = Plan::orderBy('name', 'desc')->paginate();
+        $planes = Plan::all();
         return view('planes.index', compact('planes'));
     }
 
@@ -66,7 +66,7 @@ class PlanController extends Controller
     public function edit(Plan $plane)
     {
         $domos = Dome::all(); // Obtener todos los domos
-        $servicios = Service::all(); // Obtener todos los servicios
+        $servicios = Service::where('status', '1')->get(); // Obtener todos los servicios
         return view('planes.edit', compact('plane', 'domos', 'servicios'));
     }
 

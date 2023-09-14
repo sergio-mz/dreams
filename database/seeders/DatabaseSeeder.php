@@ -19,7 +19,8 @@ class DatabaseSeeder extends Seeder
             'name' => 'Admin',
             'email' => 'admin@example.net',
             'password' => bcrypt('12345678'),
-        ])->assignRole('Admin');
+            'status'=> 1,
+        ])->assignRole('Administrador');
 
         \App\Models\Dome::factory(10)->create();
         \App\Models\Customer::factory(50)->create();

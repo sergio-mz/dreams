@@ -55,7 +55,7 @@
 
         <div class="card mb-1 p-2 pl-4">
             <h5 class="card-title"><strong>Fecha de Nacimiento</strong></h5>
-            <p class="card-text">{{ $usuario->birthdate }}</p>
+            <p class="card-text">{{ $usuario->birthday }}</p>
         </div>
 
         <div class="card mb-1 p-2 pl-4">

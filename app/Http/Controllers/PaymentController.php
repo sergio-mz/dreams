@@ -15,7 +15,7 @@ class PaymentController extends Controller
      */
     public function index()
     {
-        $pagos = Payment::orderBy('id', 'asc')->paginate();
+        $pagos = Payment::all();
         return view('pagos.index', compact('pagos'));
     }
 

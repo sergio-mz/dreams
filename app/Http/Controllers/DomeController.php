@@ -14,7 +14,7 @@ class DomeController extends Controller
      */
     public function index()
     {
-        $domos = Dome::orderBy('name', 'desc')->paginate();
+        $domos = Dome::all();
         return view('domos.index', compact('domos'));    
     }
 
@@ -64,7 +64,7 @@ class DomeController extends Controller
      */
     public function edit(Dome $domo)
     {
-        $caracteristicas = Characteristic::all(); // Obtener todos los permisos
+        $caracteristicas = Characteristic::where('status', '1')->get(); // Obtener todos los permisos
         return view('domos.edit', compact('domo', 'caracteristicas'));
     }
 

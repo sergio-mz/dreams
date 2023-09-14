@@ -3,27 +3,32 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-    <h1>Indicadores</h1>
+    <h1></h1>
 @stop
 
 @section('plugins.Chartjs', true)
 
 @section('content')
     <div class="container">
-        <div class="row align-items-center">
-            <div class="col-md-6" style="height: 300px;">
-                <canvas id="reservasMes"></canvas>
-            </div>
-            <div class="col-md-6" style="height: 300px;">
-                <canvas id="reservasDomos"></canvas>
-            </div>
-        </div>
-        <div class="row align-items-center">
-            <div class="col-md-6" style="height: 300px;">
-                <canvas id="topServicios"></canvas>
-            </div>
-            <div class="col-md-6" style="height: 300px;">
-                <canvas id="dias"></canvas>
+        <div class="card">
+            <div class="card-body">
+                <h1 class="text-2xl font-semibold mb-4">Indicadores</h1>
+                <div class="row align-items-center">
+                    <div class="col-md-6" style="height: 300px;">
+                        <canvas id="reservasMes"></canvas>
+                    </div>
+                    <div class="col-md-6" style="height: 300px;">
+                        <canvas id="reservasDomos"></canvas>
+                    </div>
+                </div>
+                <div class="row align-items-center">
+                    <div class="col-md-6" style="height: 300px;">
+                        <canvas id="topServicios"></canvas>
+                    </div>
+                    <div class="col-md-6" style="height: 300px;">
+                        <canvas id="dias"></canvas>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -53,12 +58,12 @@
                     data: Object.values(reservasMes),
                     borderWidth: 3,
                     backgroundColor: [
-                        
-                        
+
+
                         'rgba(241, 196, 15, 0.8)',
                         'rgba(230, 126, 34, 0.8)',
                         'rgba(231, 76, 60, 0.8)',
-                        'rgba(102, 204, 102, 0.8)', // Verde pastel más claro
+                        'rgba(102, 204, 102, 0.8)',
                         'rgba(204, 255, 153, 0.8)',
                         'rgba(39, 174, 96, 0.8)',
                         'rgba(46, 204, 113, 0.8)',

@@ -71,9 +71,9 @@
         </div>
 
         <div class="mb-2">
-            <label for="birthdate" class="form-label">Fecha de nacimiento:</label>
-            <input type="date" name="birthdate" id="birthdate" class="form-control" value="{{ old('birthdate') }}" placeholder="AAAA-MM-DD">
-            @error('birthdate')
+            <label for="birthday" class="form-label">Fecha de nacimiento:</label>
+            <input type="date" name="birthday" id="birthday" class="form-control" value="{{ old('birthday') }}" placeholder="AAAA-MM-DD" max="{{ date('Y-m-d', strtotime('-18 years')) }}">
+            @error('birthday')
                 <small class="text-danger">{{ $message }}</small>
             @enderror
         </div>
@@ -91,7 +91,7 @@
 
         <div class="mb-3">
             <label for="password" class="form-label">Contraseña:</label>
-            <input type="text" name="password" id="password" class="form-control">
+            <input type="password" name="password" id="password" class="form-control">
             @error('password')
                 <small class="text-danger">{{ $message }}</small>
             @enderror

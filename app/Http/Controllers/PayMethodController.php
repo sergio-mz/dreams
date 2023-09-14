@@ -12,7 +12,7 @@ class PayMethodController extends Controller
      */
     public function index()
     {
-        $metodos = PayMethod::orderBy('id', 'asc')->paginate(3);
+        $metodos = PayMethod::all();
         return view('metodos.index', compact('metodos'));
     }
 

@@ -13,7 +13,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $usuarios = User::orderBy('id', 'asc')->paginate();
+        $usuarios = User::all();
         return view('usuarios.index', compact('usuarios'));
     }
 
@@ -31,15 +31,31 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $request->validate([
+            'document' => 'required|max:50',
             'name' => 'required|max:50',
+            'last_name' => 'required|max:50',
             'email' => 'required|max:100',
+            'cellphone' => 'required|max:50',
+            'address' => 'required|max:100',
+            'city' => 'required|max:50',
+            'birthday' => 'required',
+            'gender' => 'required',
             'password' => 'required|max:50',
+            'status' => 'required',
         ]);
 
         $usuario = User::create([
+            'document' => $request->document,
             'name' => $request->name,
+            'last_name' => $request->last_name,
             'email' => $request->email,
+            'cellphone' => $request->cellphone,
+            'address' => $request->address,
+            'city' => $request->city,
+            'birthday' => $request->birthday,
+            'gender' => $request->gender,
             'password' => bcrypt($request->password),
+            'status' => $request->status,
         ]);
 
         return redirect()->route('usuarios.show',$usuario->id);
@@ -58,7 +74,7 @@ class UserController extends Controller
      */
     public function edit(User $usuario)
     {
-        $roles = Role::all(); // Obtener todos los permisos
+        $roles = Role::where('status', '1')->get(); // Obtener todos los permisos
         return view('usuarios.edit', compact('usuario', 'roles'));
     }
 
@@ -68,15 +84,31 @@ class UserController extends Controller
     public function update(Request $request, User $usuario)
     {
         $request->validate([
+            'document' => 'required|max:50',
             'name' => 'required|max:50',
+            'last_name' => 'required|max:50',
             'email' => 'required|max:100',
+            'cellphone' => 'required|max:50',
+            'address' => 'required|max:100',
+            'city' => 'required|max:50',
+            'birthday' => 'required',
+            'gender' => 'required',
             'password' => 'required|max:50',
+            'status' => 'required',
         ]);
         
         $usuario->update([
+            'document' => $request->document,
             'name' => $request->name,
+            'last_name' => $request->last_name,
             'email' => $request->email,
+            'cellphone' => $request->cellphone,
+            'address' => $request->address,
+            'city' => $request->city,
+            'birthday' => $request->birthday,
+            'gender' => $request->gender,
             'password' => bcrypt($request->password),
+            'status' => $request->status,
         ]);
 
         $usuario->assignRole($request->role);

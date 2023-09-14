@@ -12,7 +12,7 @@ class CharacteristicController extends Controller
      */
     public function index()
     {
-        $caracteristicas = Characteristic::orderBy('id', 'desc')->paginate();
+        $caracteristicas = Characteristic::all();
         return view('caracteristicas.index', compact('caracteristicas'));
     }
 

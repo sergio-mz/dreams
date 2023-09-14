@@ -383,6 +383,20 @@ return [
             'can'        => 'reservas.index',
         ],
         [
+            'text'       => 'Pagos',
+            'icon' => 'fas fa-money-bill fa-fw',
+            'icon_color' => 'red',
+            'route'        => 'pagos.index',
+            'can'        => 'pagos.index',
+        ],
+        [
+            'text'       => 'Clientes',
+            'icon' => 'fas fa-users fa-fw',
+            'icon_color' => 'red',
+            'route'        => 'clientes.index',
+            'can'        => 'clientes.index',
+        ],
+        [
             'text'       => 'Usuarios',
             'icon' => 'fas fa-users',
             'icon_color' => 'red',
@@ -396,27 +410,12 @@ return [
             'route'        => 'roles.index',
             'can'        => 'roles.index',
         ],
-        
         [
             'text'       => 'Características',
             'icon' => 'fas fa-cogs fa-fw',
             'icon_color' => 'red',
             'route'        => 'caracteristicas.index',
             'can'        => 'caracteristicas.index',
-        ],
-        [
-            'text'       => 'Clientes',
-            'icon' => 'fas fa-users fa-fw',
-            'icon_color' => 'red',
-            'route'        => 'clientes.index',
-            'can'        => 'clientes.index',
-        ],
-        [
-            'text'       => 'Métodos',
-            'icon' => 'fas fa-credit-card fa-fw',
-            'icon_color' => 'red',
-            'route'        => 'metodos.index',
-            'can'        => 'metodos.index',
         ],
         [
             'text'       => 'Servicios',
@@ -440,12 +439,13 @@ return [
             'can'        => 'planes.index',
         ],
         [
-            'text'       => 'Pagos',
-            'icon' => 'fas fa-money-bill fa-fw',
+            'text'       => 'Métodos',
+            'icon' => 'fas fa-credit-card fa-fw',
             'icon_color' => 'red',
-            'route'        => 'pagos.index',
-            'can'        => 'pagos.index',
+            'route'        => 'metodos.index',
+            'can'        => 'metodos.index',
         ],
+        
     ],
 
     /*

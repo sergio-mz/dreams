@@ -18,7 +18,7 @@ class BookingController extends Controller
      */
     public function index()
     {
-        $reservas = Booking::orderBy('id', 'asc')->get();
+        $reservas = Booking::all();
         return view('reservas.index', compact('reservas'));
     }
 
@@ -45,7 +45,7 @@ class BookingController extends Controller
         $planesDisponibles = Plan::availableForDates($fechaInicio, $fechaFin)
             ->get();
 
-        $servicios = Service::all(); // Obtener todos los servicios
+        $servicios = Service::where('status', '1')->get(); // Obtener todos los servicios
         $clientes = Customer::all(); // Obtener todos los clientes
 
         return view('reservas.create', compact('domosDisponibles', 'fechaInicio', 'fechaFin', 'servicios', 'planesDisponibles', 'clientes'));

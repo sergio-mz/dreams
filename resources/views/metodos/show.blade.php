@@ -11,23 +11,19 @@
     <div class="container">
         <h1 class="mb-4">Detalles:</h1>
         <a href="{{ route('metodos.index') }}" class="btn btn-secondary mb-2">Volver a Métodos</a>
-        @if ($metodo->id != 1)
-            <a href="{{ route('metodos.edit', $metodo) }}" class="btn btn-warning mb-2">Editar Método</a>
-        @endif
+        <a href="{{ route('metodos.edit', $metodo) }}" class="btn btn-warning mb-2">Editar Método</a>
 
         <div class="card mb-1 p-2 pl-4">
             <h5 class="card-title"><strong>Nombre</strong></h5>
             <p class="card-text">{{ $metodo->name }}</p>
         </div>
 
-        @if ($metodo->id != 1)
-            <form action="{{ route('metodos.destroy', $metodo) }}" method="POST" class="mt-2">
-                @csrf
-                @method('delete')
-                <button type="submit" class="btn btn-danger"
-                    onclick="return confirm('¿Estás seguro de eliminar este rol?')">Eliminar</button>
-            </form>
-        @endif
+        <form action="{{ route('metodos.destroy', $metodo) }}" method="POST" class="mt-2">
+            @csrf
+            @method('delete')
+            <button type="submit" class="btn btn-danger"
+                onclick="return confirm('¿Estás seguro de eliminar este rol?')">Eliminar</button>
+        </form>
 
     </div>
 

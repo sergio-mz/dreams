@@ -17,6 +17,7 @@ class HomeController extends Controller
         // Retrocede un año a partir de la fecha actual
         $lastYearDate = $currentDate->copy()->subYear();
 
+
         // reservas realizadas por meses en el último año
         $reservasPorMes = Booking::whereBetween('start_date', [$lastYearDate, $currentDate])
             ->selectRaw('DATE_FORMAT(start_date, "%Y-%m") as mes_ano, COUNT(*) as total_reservas')
@@ -29,6 +30,7 @@ class HomeController extends Controller
         foreach ($reservasPorMes as $reserva) {
             $reservasMes[$reserva->mes_ano] = $reserva->total_reservas;
         }
+
 
         // domos y la cantidad de reservas en el último año
         $domosYReservas = Dome::withCount(['bookings' => function ($query) use ($lastYearDate, $currentDate) {
@@ -43,6 +45,7 @@ class HomeController extends Controller
             $reservasDomos[$domo->name] = $domo->bookings_count;
         }
 
+
         //Top Services
         $topServices = Service::select('services.*')
             ->withCount('bookings')
@@ -55,6 +58,7 @@ class HomeController extends Controller
         foreach ($topServices as $service) {
             $services[$service->name] = $service->bookings_count;
         }
+
 
 
         $reservaPorDia = Booking::select([
@@ -88,6 +92,7 @@ class HomeController extends Controller
             $reservaDia[$dia->day_of_week] = $dia->total_reservations;
         }
 
+        
         return view('home', compact('reservasMes', 'reservasDomos', 'services', 'reservaDia'));
         /* return $reservaDia; */
     }

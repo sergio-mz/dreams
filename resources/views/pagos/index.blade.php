@@ -80,8 +80,6 @@
 
             </div>
         </div>
-
-        {{-- {{ $pagos->links() }} --}}
     </div>
 
 @stop

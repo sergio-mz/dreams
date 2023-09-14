@@ -18,7 +18,8 @@
             <div class="mb-2">
                 <label for="start_date" class="form-label">Fecha Inicio:</label>
                 <input type="date" name="start_date" id="start_date" class="form-control"
-                    value="{{ isset($fechaInicio) ? $fechaInicio : '' }}">
+                    value="{{ isset($fechaInicio) ? $fechaInicio : '' }}" min="{{ date('Y-m-d') }}"
+                    oninput="updateMinEndDate(this.value)">
                 @error('start_date')
                     <small class="text-danger">{{ $message }}</small>
                 @enderror
@@ -60,8 +61,7 @@
 
                 <div class="mb-2">
                     <label for="customer_id" class="form-label">Cliente:</label>
-                    <select name="customer_id" id="customer_id"
-                        class="form-control custom-select-height">
+                    <select name="customer_id" id="customer_id" class="form-control">
                         <option value="">Seleccione</option>
                         @foreach ($clientes as $cliente)
                             <option value="{{ $cliente->id }}">{{ $cliente->document }}</option>
@@ -75,7 +75,7 @@
                 <div class="mb-2">
                     <label for="domes" class="form-label">Domos:</label>
                     @if ($domosDisponibles->count() > 0)
-                        <select name="domes[]" id="domes" class="form-control{{--  chosen-select --}}" multiple>
+                        <select name="domes[]" id="domes" class="form-control" multiple>
                             @foreach ($domosDisponibles as $domo)
                                 <option value="{{ $domo->id }}">{{ $domo->name }}</option>
                             @endforeach
@@ -91,7 +91,7 @@
                 <div class="mb-2">
                     <label for="plans" class="form-label">Planes:</label>
                     @if ($planesDisponibles->count() > 0)
-                        <select name="plans[]" id="plans" class="form-control{{--  chosen-select --}}" multiple>
+                        <select name="plans[]" id="plans" class="form-control" multiple>
                             @foreach ($planesDisponibles as $plane)
                                 <option value="{{ $plane->id }}">{{ $plane->name }}</option>
                             @endforeach
@@ -106,7 +106,7 @@
 
                 <div class="mb-2">
                     <label for="services" class="form-label">Servicios:</label>
-                    <select name="services[]" id="services" class="form-control{{--  chosen-select --}}" multiple>
+                    <select name="services[]" id="services" class="form-control" multiple>
                         @foreach ($servicios as $servicio)
                             <option value="{{ $servicio->id }}">{{ $servicio->name }}</option>
                         @endforeach
@@ -122,8 +122,7 @@
 
                 <div class="mb-2">
                     <label for="discount" class="form-label">Descuento(%):</label>
-                    <input type="number" name="discount" id="discount" class="form-control"
-                        value="0" min="0">
+                    <input type="number" name="discount" id="discount" class="form-control" value="0" min="0">
                     @error('discount')
                         <small class="text-danger">{{ $message }}</small>
                     @enderror
@@ -131,8 +130,8 @@
 
                 <div class="mb-2">
                     <label for="tax" class="form-label">Impuesto(%):</label>
-                    <input type="number" name="tax" id="tax" class="form-control"
-                        value="19"  min="0">
+                    <input type="number" name="tax" id="tax" class="form-control" value="19"
+                        min="0">
                     @error('tax')
                         <small class="text-danger">{{ $message }}</small>
                     @enderror
@@ -148,57 +147,8 @@
 @section('css')
     {{-- <link rel="stylesheet" href="/css/admin_custom.css"> --}}
 
-    {{-- <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" /> --}}
-    {{-- <link href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.min.css" rel="stylesheet" /> --}}
-
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
 
-    <style>
-        .custom-select-height {
-            height: 38px;
-            /* Ajusta la altura según tus necesidades */
-        }
-    </style>
-
-    {{-- <style>
-        /* Estilo personalizado para Chosen */
-        .chosen-container-single .chosen-single {
-            background-color: #fff;
-            border: 1px solid #ced4da;
-            border-radius: 0.25rem;
-            padding: 0.375rem 0.75rem;
-            height: calc(1.5em + 0.75rem + 2px);
-            box-shadow: none;
-            font-family: inherit;
-            /* Utiliza la fuente heredada de Bootstrap */
-            font-size: 1rem;
-            /* Utiliza el tamaño de fuente heredado de Bootstrap */
-        }
-
-        /* Ajuste para la flecha de Chosen */
-        .chosen-container-single .chosen-single abbr {
-            border-bottom: none;
-        }
-
-        /* Estilo para las opciones de Chosen */
-        .chosen-container .chosen-results {
-            max-height: 200px;
-            border: 1px solid #ced4da;
-            border-radius: 0.25rem;
-            background-color: #fff;
-            overflow-y: auto;
-        }
-
-        /* Estilo para el campo activo de Chosen */
-        .chosen-container-active .chosen-single {
-            background-color: #fff;
-        }
-
-        /* Estilo para el contenedor de opciones activas */
-        .chosen-container-active .chosen-results {
-            border-color: #ced4da;
-        }
-    </style> --}}
 @stop
 
 @section('js')
@@ -206,22 +156,12 @@
         console.log('Hi!');
     </script>
 
-    <!-- Agrega el script de jQuery -->
-    {{-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-    <!-- Agrega el script de Chosen -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.min.js"></script>
     <script>
-        $(document).ready(function() {
-            $('.chosen-select').chosen({
-                placeholder_text_single: 'Selecciona',
-                placeholder_text_multiple: 'Selecciona',
-                no_results_text: 'No se encontraron resultados'
-            });
-        });
-    </script> --}}
-
-
+        function updateMinEndDate(minStartDate) {
+            const endDateInput = document.getElementById('end_date');
+            endDateInput.min = minStartDate;
+        }
+    </script>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>

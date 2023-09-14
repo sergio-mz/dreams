@@ -25,9 +25,9 @@ use Illuminate\Support\Facades\Route;
 |
  */
 
-Route::get('/registrar', function () {
+/* Route::get('/registrar', function () {
     return view('welcome');
-});
+}); */
 Route::get('/', function () {
     return view('index');
 })->name('inicio');
@@ -36,7 +36,8 @@ Route::middleware([
     'auth:web',
     config('jetstream.auth_session'),
     'verified',
-    'role:Admin',
+    'ensure.active',
+    'role:Administrador',
 ])->group(function () {
 
     Route::controller(CharacteristicController::class)->group(function () {
@@ -61,6 +62,7 @@ Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
     'verified',
+    'ensure.active',
 ])->group(function () {
 
     Route::get('/dashboard', function () {
