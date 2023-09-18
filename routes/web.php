@@ -56,6 +56,9 @@ Route::middleware([
     Route::resource('servicios', ServiceController::class);
     Route::resource('planes', PlanController::class);
     Route::resource('metodos', PayMethodController::class);
+
+    /* Route::get('pagos/{pago}/edit', [PaymentController::class, 'edit'])->name('pagos.edit');
+    Route::delete('pagos/{pago}', [PaymentController::class, 'destroy'])->name('pagos.destroy'); */
 });
 
 Route::middleware([
@@ -72,7 +75,7 @@ Route::middleware([
     Route::get('/home', HomeController::class)->name('home');
     Route::resource('clientes', CustomerController::class);
 
-    Route::resource('pagos', PaymentController::class)->except(['create']);
+    Route::resource('pagos', PaymentController::class)->except(['create','edit','destroy']); /* se pueden crear en las lineas 60 y 61 */
     Route::post('pagos/create', [PaymentController::class, 'create'])->name('pagos.create');
     Route::get('active-bookings', [PaymentController::class, 'activeBookings'])->name('pagos.activeBookings');
     Route::get('pdf/{pago}', [PaymentController::class, 'pdf'])->name('pagos.pdf');
