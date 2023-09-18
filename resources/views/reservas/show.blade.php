@@ -36,7 +36,7 @@
             <h5 class="card-title"><strong>Domos</strong></h5>
             <ul>
                 @foreach ($reserva->domes as $dome)
-                    <li>{{ $dome->name }}</li>
+                    <li>{{ $dome->name }} - $ {{$dome->price}}</li>
                 @endforeach
             </ul>
         </div>
@@ -45,7 +45,7 @@
             <h5 class="card-title"><strong>Servicios</strong></h5>
             <ul>
                 @foreach ($reserva->services as $service)
-                    <li>{{ $service->name }}</li>
+                    <li>{{ $service->name }} - $ {{$service->price}}</li>
                 @endforeach
             </ul>
         </div>
@@ -54,7 +54,7 @@
             <h5 class="card-title"><strong>Planes</strong></h5>
             <ul>
                 @foreach ($reserva->plans as $plan)
-                    <li>{{ $plan->name }}</li>
+                    <li>{{ $plan->name }} - $ {{$plan->price}}</li>
                 @endforeach
             </ul>
         </div>
@@ -62,6 +62,11 @@
         <div class="card mb-1 p-2 pl-4">
             <h5 class="card-title"><strong>Usuario</strong></h5>
             <p class="card-text">{{ $reserva->user->name }} ({{ $reserva->user->roles->first()->name }})</p>
+        </div>
+
+        <div class="card mb-1 p-2 pl-4">
+            <h5 class="card-title"><strong>Total</strong></h5>
+            <p class="card-text">{{ $reserva->total }}</p>
         </div>
 
         @can('reservas.destroy')

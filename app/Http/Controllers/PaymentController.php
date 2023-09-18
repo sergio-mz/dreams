@@ -49,9 +49,9 @@ class PaymentController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
+        /* $request->validate([
             'partial' => 'lte:' . $request->saldo,
-        ]);
+        ]); */
 
         $value = $request->total;
 
@@ -59,18 +59,19 @@ class PaymentController extends Controller
             $value = $request->partial;
         }
 
-        if ($value > 0) {
-            $pago = Payment::create([
-                'booking_id' => $request->booking_id,
-                'pay_method_id' => $request->pay_method_id,
-                'value' => $value,
-                'status' => 1,
-            ]);
+            if ($value > 0) {
+                $pago = Payment::create([
+                    'booking_id' => $request->booking_id,
+                    'pay_method_id' => $request->pay_method_id,
+                    'value' => $value,
+                    'status' => 1,
+                ]);
 
-            return redirect()->route('pagos.show', $pago->id);
-        } else {
-            return redirect()->route('pagos.index');
-        }
+                return redirect()->route('pagos.show', $pago->id);
+            } else {
+                return redirect()->route('pagos.index');
+            }
+
     }
 
     /**

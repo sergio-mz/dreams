@@ -7,6 +7,7 @@ use App\Models\Customer;
 use App\Models\Dome;
 use App\Models\Plan;
 use App\Models\Service;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
@@ -73,10 +74,14 @@ class BookingController extends Controller
         $planesWithPrices = [];
         $servicesWithPricesAndQuantity = [];
 
+        $fechaInicio = Carbon::createFromFormat('Y-m-d', $request->input('start_date'));
+        $fechaFin = Carbon::createFromFormat('Y-m-d', $request->input('end_date'));
+        $dias = $fechaInicio->diffInDays($fechaFin);
+
         if (isset($request->domes)) {
             foreach ($request->domes as $dome) {
                 $price = Dome::find($dome)->price;
-                $valordomos += $price;
+                $valordomos += $price*$dias;
                 $domesWithPrices[$dome] = ['price' => $price];
             }
         }
@@ -84,7 +89,7 @@ class BookingController extends Controller
         if (isset($request->plans)) {
             foreach ($request->plans as $plan) {
                 $price = Plan::find($plan)->price;
-                $valorplanes += $price;
+                $valorplanes += $price*$dias;
                 $planesWithPrices[$plan] = ['price' => $price];
             }
         }
@@ -111,10 +116,6 @@ class BookingController extends Controller
             'total' => $total,
         ]);
 
-        /* foreach ($request->domes as $domeId) {
-        // Utiliza el método attach para agregar la relación con el precio
-        $reserva->domes()->attach($domeId, ['price' => Dome::find($dome)->price]);
-        } */
         $reserva->domes()->sync($domesWithPrices);
         $reserva->plans()->sync($planesWithPrices);
         $reserva->services()->sync($servicesWithPricesAndQuantity);
