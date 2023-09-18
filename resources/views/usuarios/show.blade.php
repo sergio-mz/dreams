@@ -10,9 +10,12 @@
 
     <div class="container">
         <h1 class="mb-4">Detalles:</h1>
-        <a href="{{ route('usuarios.index') }}" class="btn btn-secondary mb-2">Volver a Usuarios</a>
-        <a href="{{ route('usuarios.edit', $usuario) }}" class="btn btn-warning mb-2">Editar Usuario</a>
-
+        @can('usuarios.index')
+            <a href="{{ route('usuarios.index') }}" class="btn btn-secondary mb-2">Volver a Usuarios</a>
+        @endcan
+        @can('usuarios.edit')
+            <a href="{{ route('usuarios.edit', $usuario) }}" class="btn btn-warning mb-2">Editar Usuario</a>
+        @endcan
         <div class="card mb-1 p-2 pl-4">
             <h5 class="card-title"><strong>Id</strong></h5>
             <p class="card-text">{{ $usuario->id }}</p>
@@ -65,9 +68,9 @@
 
         <div class="card mb-1 p-2 pl-4">
             <h5 class="card-title"><strong>Rol Asignado</strong></h5>
-                @foreach ($usuario->roles as $role)
-                    <p class="card-text">{{ $role->name }}</p>
-                @endforeach
+            @foreach ($usuario->roles as $role)
+                <p class="card-text">{{ $role->name }}</p>
+            @endforeach
         </div>
 
         <div class="card mb-1 p-2 pl-4">
@@ -75,12 +78,14 @@
             <p class="card-text">{{ $usuario->status == 1 ? 'Activo' : 'Inactivo' }}</p>
         </div>
 
-        <form action="{{ route('usuarios.destroy', $usuario) }}" method="POST" class="mt-2">
-            @csrf
-            @method('delete')
-            <button type="submit" class="btn btn-danger"
-                onclick="return confirm('¿Estás seguro de eliminar este usuario?')">Eliminar</button>
-        </form>
+        @can('usuarios.destroy')
+            <form action="{{ route('usuarios.destroy', $usuario) }}" method="POST" class="mt-2">
+                @csrf
+                @method('delete')
+                <button type="submit" class="btn btn-danger"
+                    onclick="return confirm('¿Estás seguro de eliminar este usuario?')">Eliminar</button>
+            </form>
+        @endcan
     </div>
 
 @stop

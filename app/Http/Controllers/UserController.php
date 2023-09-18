@@ -31,7 +31,7 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'document' => 'required|max:50',
+            'document' => 'required|min:8|max:50',
             'name' => 'required|max:50',
             'last_name' => 'required|max:50',
             'email' => 'required|max:100',
@@ -40,7 +40,7 @@ class UserController extends Controller
             'city' => 'required|max:50',
             'birthday' => 'required',
             'gender' => 'required',
-            'password' => 'required|max:50',
+            'password' => 'required|min:8',
             'status' => 'required',
         ]);
 
@@ -84,7 +84,7 @@ class UserController extends Controller
     public function update(Request $request, User $usuario)
     {
         $request->validate([
-            'document' => 'required|max:50',
+            'document' => 'required|min:8|max:50',
             'name' => 'required|max:50',
             'last_name' => 'required|max:50',
             'email' => 'required|max:100',
@@ -93,7 +93,7 @@ class UserController extends Controller
             'city' => 'required|max:50',
             'birthday' => 'required',
             'gender' => 'required',
-            'password' => 'required|max:50',
+            'password' => 'required|min:8',
             'status' => 'required',
         ]);
         

@@ -39,15 +39,19 @@
                                 </td>
                                 <td class="align-middle">
                                     <div class="d-flex justify-content-end">
-                                        <a href="{{ route('caracteristicas.edit', $caracteristica) }}"
-                                            class="btn btn-warning btn-sm mr-2">Editar</a>
-                                        <form action="{{ route('caracteristicas.destroy', $caracteristica) }}"
-                                            method="POST" class="d-inline">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-danger btn-sm"
-                                                onclick="return confirm('¿Estás seguro de eliminar esta característica?')">Eliminar</button>
-                                        </form>
+                                        @can('caracteristicas.edit')
+                                            <a href="{{ route('caracteristicas.edit', $caracteristica) }}"
+                                                class="btn btn-warning btn-sm mr-2">Editar</a>
+                                        @endcan
+                                        @can('caracteristicas.destroy')
+                                            <form action="{{ route('caracteristicas.destroy', $caracteristica) }}"
+                                                method="POST" class="d-inline">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger btn-sm"
+                                                    onclick="return confirm('¿Estás seguro de eliminar esta característica?')">Eliminar</button>
+                                            </form>
+                                        @endcan
                                     </div>
                                 </td>
                             </tr>

@@ -67,6 +67,6 @@ class RoleSeeder extends Seeder
         Permission::create(['name' => 'pagos.index','description' => 'Ver listado de pagos'])->syncRoles('Administrador','Asistente');
         Permission::create(['name' => 'pagos.create','description' => 'Crear pago'])->syncRoles('Administrador','Asistente');
         Permission::create(['name' => 'pagos.edit','description' => 'Editar pago'])->syncRoles('Administrador');
-        Permission::create(['name' => 'pagos.destroy','description' => 'Eliminar pago'])->syncRoles('Administrador');
+        Permission::create(['name' => 'pagos.cancel','description' => 'Anular pago'])->syncRoles('Administrador','Asistente');
     }
 }

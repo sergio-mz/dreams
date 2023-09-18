@@ -22,6 +22,7 @@ return new class extends Migration
                 ->onUpdate('cascade');
 
             $table->decimal('value', 10, 2);
+            $table->boolean('status');
 
             $table->timestamps();
         });

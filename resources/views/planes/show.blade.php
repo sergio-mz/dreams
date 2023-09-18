@@ -10,8 +10,12 @@
 
     <div class="container">
         <h1 class="mb-4">Detalles:</h1>
-        <a href="{{ route('planes.index') }}" class="btn btn-secondary mb-2">Volver a Planes</a>
-        <a href="{{ route('planes.edit', $plane) }}" class="btn btn-warning mb-2">Editar Plan</a>
+        @can('planes.index')
+            <a href="{{ route('planes.index') }}" class="btn btn-secondary mb-2">Volver a Planes</a>
+        @endcan
+        @can('planes.edit')
+            <a href="{{ route('planes.edit', $plane) }}" class="btn btn-warning mb-2">Editar Plan</a>
+        @endcan
 
         <div class="card mb-1 p-2 pl-4">
             <h5 class="card-title"><strong>Nombre</strong></h5>
@@ -47,12 +51,14 @@
             </ul>
         </div>
 
-        <form action="{{ route('planes.destroy', $plane) }}" method="POST" class="mt-2">
-            @csrf
-            @method('delete')
-            <button type="submit" class="btn btn-danger"
-                onclick="return confirm('¿Estás seguro de eliminar este plane?')">Eliminar</button>
-        </form>
+        @can('planes.destroy')
+            <form action="{{ route('planes.destroy', $plane) }}" method="POST" class="mt-2">
+                @csrf
+                @method('delete')
+                <button type="submit" class="btn btn-danger"
+                    onclick="return confirm('¿Estás seguro de eliminar este plane?')">Eliminar</button>
+            </form>
+        @endcan
     </div>
 
 @stop
@@ -66,4 +72,3 @@
         console.log('Hi!');
     </script>
 @stop
-

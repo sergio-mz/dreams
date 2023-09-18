@@ -10,9 +10,13 @@
 
     <div class="container">
         <h1 class="mb-4">Detalles:</h1>
-        <a href="{{ route('roles.index') }}" class="btn btn-secondary mb-2">Volver a Roles</a>
+        @can('roles.index')
+            <a href="{{ route('roles.index') }}" class="btn btn-secondary mb-2">Volver a Roles</a>
+        @endcan
         @if ($role->id != 1)
-            <a href="{{ route('roles.edit', $role) }}" class="btn btn-warning mb-2">Editar Rol</a>
+            @can('roles.edit')
+                <a href="{{ route('roles.edit', $role) }}" class="btn btn-warning mb-2">Editar Rol</a>
+            @endcan
         @endif
 
 
@@ -36,12 +40,14 @@
         </div>
 
         @if ($role->id != 1)
-            <form action="{{ route('roles.destroy', $role) }}" method="POST" class="mt-2">
-                @csrf
-                @method('delete')
-                <button type="submit" class="btn btn-danger"
-                    onclick="return confirm('¿Estás seguro de eliminar este rol?')">Eliminar</button>
-            </form>
+            @can('roles.destroy')
+                <form action="{{ route('roles.destroy', $role) }}" method="POST" class="mt-2">
+                    @csrf
+                    @method('delete')
+                    <button type="submit" class="btn btn-danger"
+                        onclick="return confirm('¿Estás seguro de eliminar este rol?')">Eliminar</button>
+                </form>
+            @endcan
         @endif
 
     </div>

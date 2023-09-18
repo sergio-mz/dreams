@@ -23,10 +23,11 @@
                 <table class="table" id="tablaPagos">
                     <thead class="bg-gray-200">
                         <tr>
-                            <th class="text-uppercase text-muted font-weight-bold align-middle">ID</th>
+                            <th class="text-uppercase text-muted font-weight-bold align-middle">Pago Nº</th>
                             <th class="text-uppercase text-muted font-weight-bold align-middle">Cliente</th>
                             <th class="text-uppercase text-muted font-weight-bold align-middle">Fecha</th>
                             <th class="text-uppercase text-muted font-weight-bold align-middle">Código Reserva</th>
+                            <th class="text-uppercase text-muted font-weight-bold align-middle">Estado</th>
                             <th class="text-center text-uppercase text-muted" style="width: 100px;">Acciones</th>
                         </tr>
                     </thead>
@@ -58,19 +59,28 @@
                                     </ul>
                                 </td>
                                 <td class="align-middle">
+                                    <ul class="list-unstyled mb-1 pl-2">
+                                        <li><strong>{{ $pago->status == 1 ? 'Activo' : 'Anulado' }}</strong></li>
+                                    </ul>
+                                </td>
+                                <td class="align-middle">
                                     <div class="d-flex justify-content-end">
-                                        @can('pagos.edit')
+                                        {{-- @can('pagos.edit')
                                             <a href="{{ route('pagos.edit', $pago) }}"
                                                 class="btn btn-warning btn-sm mr-2">Editar</a>
-                                        @endcan
-                                        @can('pagos.destroy')
-                                            <form action="{{ route('pagos.destroy', $pago) }}" method="POST" class="d-inline">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-danger btn-sm"
-                                                    onclick="return confirm('¿Estás seguro de eliminar este Pago?')">Eliminar</button>
-                                            </form>
-                                        @endcan
+                                        @endcan --}}
+                                        @if ($pago->status == 1)
+                                            @can('pagos.cancel')
+                                                <form action="{{ route('pagos.cancel', $pago) }}" method="POST"
+                                                    class="d-inline">
+                                                    @csrf
+                                                    @method('put')
+                                                    <button type="submit" class="btn btn-danger"
+                                                        onclick="return confirm('¿Estás seguro de anular este pago?')">Anular</button>
+                                                </form>
+                                            @endcan
+                                        @endif
+
                                     </div>
                                 </td>
                             </tr>

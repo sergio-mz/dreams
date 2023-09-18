@@ -10,8 +10,12 @@
 
     <div class="container">
         <h1 class="mb-4">Detalles:</h1>
-        <a href="{{ route('reservas.index') }}" class="btn btn-secondary mb-2">Volver a Reservas</a>
-        <a href="{{ route('reservas.edit', $reserva) }}" class="btn btn-warning mb-2">Editar Reserva</a>
+        @can('reservas.index')
+            <a href="{{ route('reservas.index') }}" class="btn btn-secondary mb-2">Volver a Reservas</a>
+        @endcan
+        @can('reservas.edit')
+            <a href="{{ route('reservas.edit', $reserva) }}" class="btn btn-warning mb-2">Editar Reserva</a>
+        @endcan
 
         <div class="card mb-1 p-2 pl-4">
             <h5 class="card-title"><strong>Cliente</strong></h5>
@@ -57,15 +61,17 @@
 
         <div class="card mb-1 p-2 pl-4">
             <h5 class="card-title"><strong>Usuario</strong></h5>
-            <p class="card-text">{{ $reserva->user->name }} ({{$reserva->user->roles->first()->name}})</p>
+            <p class="card-text">{{ $reserva->user->name }} ({{ $reserva->user->roles->first()->name }})</p>
         </div>
 
-        <form action="{{ route('reservas.destroy', $reserva) }}" method="POST" class="mt-2">
-            @csrf
-            @method('delete')
-            <button type="submit" class="btn btn-danger"
-                onclick="return confirm('¿Estás seguro de eliminar este reserva?')">Eliminar</button>
-        </form>
+        @can('reservas.destroy')
+            <form action="{{ route('reservas.destroy', $reserva) }}" method="POST" class="mt-2">
+                @csrf
+                @method('delete')
+                <button type="submit" class="btn btn-danger"
+                    onclick="return confirm('¿Estás seguro de eliminar este reserva?')">Eliminar</button>
+            </form>
+        @endcan
     </div>
 
 @stop
@@ -79,4 +85,3 @@
         console.log('Hi!');
     </script>
 @stop
-

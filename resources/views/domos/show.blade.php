@@ -10,8 +10,12 @@
 
     <div class="container">
         <h1 class="mb-4">Detalles:</h1>
-        <a href="{{ route('domos.index') }}" class="btn btn-secondary mb-2">Volver a Domos</a>
-        <a href="{{ route('domos.edit', $domo) }}" class="btn btn-warning mb-2">Editar Domo</a>
+        @can('domos.index')
+            <a href="{{ route('domos.index') }}" class="btn btn-secondary mb-2">Volver a Domos</a>
+        @endcan
+        @can('domos.edit')
+            <a href="{{ route('domos.edit', $domo) }}" class="btn btn-warning mb-2">Editar Domo</a>
+        @endcan
 
         <div class="card mb-1 p-2 pl-4">
             <h5 class="card-title"><strong>Nombre</strong></h5>
@@ -52,12 +56,14 @@
             </ul>
         </div>
 
-        <form action="{{ route('domos.destroy', $domo) }}" method="POST" class="mt-2">
-            @csrf
-            @method('delete')
-            <button type="submit" class="btn btn-danger"
-                onclick="return confirm('¿Estás seguro de eliminar este domo?')">Eliminar</button>
-        </form>
+        @can('domos.destroy')
+            <form action="{{ route('domos.destroy', $domo) }}" method="POST" class="mt-2">
+                @csrf
+                @method('delete')
+                <button type="submit" class="btn btn-danger"
+                    onclick="return confirm('¿Estás seguro de eliminar este domo?')">Eliminar</button>
+            </form>
+        @endcan
     </div>
 
 @stop

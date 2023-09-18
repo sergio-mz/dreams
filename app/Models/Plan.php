@@ -40,6 +40,14 @@ class Plan extends Model
                         $query->where('start_date', '<=', $fechaInicio)
                             ->where('end_date', '>=', $fechaFin);
                     });
+            })
+            ->WhereDoesntHave('dome.bookings', function ($query) use ($fechaInicio, $fechaFin) {
+                $query->whereBetween('start_date', [$fechaInicio, $fechaFin])
+                    ->orWhereBetween('end_date', [$fechaInicio, $fechaFin])
+                    ->orWhere(function ($query) use ($fechaInicio, $fechaFin) {
+                        $query->where('start_date', '<=', $fechaInicio)
+                            ->where('end_date', '>=', $fechaFin);
+                    });
             });
     }
 }

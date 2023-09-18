@@ -10,10 +10,12 @@
 
     <div class="container">
         <h1 class="mb-4">Detalles:</h1>
-        <a href="{{ route('pagos.index') }}" class="btn btn-secondary mb-2">Volver a Pagos</a>
-        @can('pagos.edit')
-        <a href="{{ route('pagos.edit', $pago) }}" class="btn btn-warning mb-2">Editar Pago</a>
+        @can('pagos.index')
+            <a href="{{ route('pagos.index') }}" class="btn btn-secondary mb-2">Volver a Pagos</a>
         @endcan
+        {{-- @can('pagos.edit')
+        <a href="{{ route('pagos.edit', $pago) }}" class="btn btn-warning mb-2">Editar Pago</a>
+        @endcan --}}
         <a href="{{ route('pagos.pdf', $pago) }}" class="btn btn-info mb-2">PDF</a>
 
         <div class="card mb-1 p-2 pl-4">
@@ -41,13 +43,18 @@
             <p class="card-text">{{ $pago->created_at }}</p>
         </div>
 
-        @can('pagos.destroy')
-        <form action="{{ route('pagos.destroy', $pago) }}" method="POST" class="mt-2">
-            @csrf
-            @method('delete')
-            <button type="submit" class="btn btn-danger"
-                onclick="return confirm('¿Estás seguro de eliminar este pago?')">Eliminar</button>
-        </form>
+        <div class="card mb-1 p-2 pl-4">
+            <h5 class="card-title"><strong>Estado</strong></h5>
+            <p class="card-text">{{ $pago->status == 1 ? 'Activo' : 'Anulado' }}</p>
+        </div>
+
+        @can('pagos.cancel')
+            <form action="{{ route('pagos.cancel', $pago) }}" method="POST" class="mt-2">
+                @csrf
+                @method('put')
+                <button type="submit" class="btn btn-danger"
+                    onclick="return confirm('¿Estás seguro de anular este pago?')">Anular</button>
+            </form>
         @endcan
     </div>
 
@@ -62,4 +69,3 @@
         console.log('Hi!');
     </script>
 @stop
-

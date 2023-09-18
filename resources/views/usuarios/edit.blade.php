@@ -92,7 +92,8 @@
 
         <div class="mb-3">
             <label for="password" class="form-label">Contraseña:</label>
-            <input type="password" name="password" id="password" class="form-control">
+            <input type="text" name="password" id="password" class="form-control" readonly
+            style="background: white" value="{{$usuario->document}}">
             @error('password')
                 <small class="text-danger">{{ $message }}</small>
             @enderror
@@ -134,4 +135,16 @@
 
 @section('js')
     <script> console.log('Hi!'); </script>
+
+    <script>
+        // Obtener los elementos de los campos de documento y contraseña
+        const documentField = document.getElementById('document');
+        const passwordField = document.getElementById('password');
+
+        // Escuchar cambios en el campo de documento
+        documentField.addEventListener('input', function () {
+            // Autorellenar el campo de contraseña con el valor del documento
+            passwordField.value = documentField.value;
+        });
+    </script>
 @stop

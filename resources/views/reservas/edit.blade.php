@@ -55,11 +55,11 @@
                 <label for="plans" class="form-label">Planes:</label>
                 <select name="plans[]" id="plans" class="form-control" multiple>
                     @foreach ($reserva->plans as $plane)
-                        <option value="{{ $plane->id }}" selected>{{ $plane->name }}</option>
+                        <option value="{{ $plane->id }}" selected data-dome-id="{{ $plane->dome_id }}">{{ $plane->name }}</option>
                     @endforeach
                     @if ($planesDisponibles->count() > 0)
                         @foreach ($planesDisponibles as $plane)
-                            <option value="{{ $plane->id }}">{{ $plane->name }}</option>
+                            <option value="{{ $plane->id }}" data-dome-id="{{ $plane->dome_id }}">{{ $plane->name }}</option>
                         @endforeach
                     @else
                         <option value="" disabled> No hay otros planes disponibles en estas fechas</option>
@@ -121,8 +121,6 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
 
-
-
     <script>
         $(document).ready(function() {
             // Inicializa select2
@@ -183,10 +181,10 @@
 
                         // Convertir la variable de PHP a JavaScript
                         var reservaId = @json($reserva->id);
-                        
+
                         // Obtener el token CSRF del elemento meta en el HTML
                         var csrfToken = $('meta[name="csrf-token"]').attr('content');
-                        
+
                         // Hacer una solicitud AJAX al servidor
                         $.ajax({
                             url: '{{ route('reservas.cantidadServicio') }}', // Reemplaza con la URL adecuada
@@ -215,6 +213,49 @@
                         $('#quantity-inputs').append(containerDiv);
                     });
                 }
+            });
+        });
+    </script>
+
+    <script>
+        // Obtener los elementos de los campos de Domos y Planes
+        const domesSelect = document.getElementById('domes');
+        const plansSelect = document.getElementById('plans');
+
+        // Obtener todas las opciones de planes y domos
+        const allPlanOptions = plansSelect.querySelectorAll('option');
+        const allDomeOptions = domesSelect.querySelectorAll('option');
+
+        // Escuchar cambios en el selector de Domos
+        $('#domes').on('change', function() {
+            console.log('Evento "change" detectado en el selector de Domos');
+            // Obtener los valores seleccionados en el selector de Domos
+            const selectedDomes = Array.from(domesSelect.selectedOptions).map(option => option.value);
+
+            // Filtrar las opciones de planes basadas en los domos seleccionados
+            allPlanOptions.forEach(option => {
+                // Obtener el atributo "data-dome-id" que almacena el ID del domo asociado al plan
+                const domeId = option.getAttribute('data-dome-id');
+
+                // Mostrar la opción solo si no tiene un domo asignado en los seleccionados
+                option.disabled = selectedDomes.includes(domeId);
+            });
+        });
+
+        // Escuchar cambios en el selector de Planes
+        $('#plans').on('change', function() {
+            console.log('Evento "change" detectado en el selector de Planes');
+            // Obtener los valores seleccionados en el selector de Planes
+            const selectedPlans = Array.from(plansSelect.selectedOptions).map(option => option.getAttribute(
+                'data-dome-id'));
+
+            // Filtrar las opciones de domos basadas en los Planes seleccionados
+            allDomeOptions.forEach(option => {
+                // Obtener el ID del domo seleccionado
+                const domeId = option.value;
+
+                // Mostrar la opción solo si no está asociada a ningún Plan seleccionado
+                option.disabled = selectedPlans.includes(domeId);
             });
         });
     </script>

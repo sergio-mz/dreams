@@ -35,7 +35,7 @@ class PaymentController extends Controller
         ]);
 
         $esta_reserva = Booking::find($request->booking_id);
-        $abonos = $esta_reserva->payments()->sum('value');
+        $abonos = $esta_reserva->payments()->where('status', '1')->sum('value');
         $saldo = $esta_reserva->total - $abonos;
 
         $reservas = Booking::all();
@@ -64,6 +64,7 @@ class PaymentController extends Controller
                 'booking_id' => $request->booking_id,
                 'pay_method_id' => $request->pay_method_id,
                 'value' => $value,
+                'status' => 1,
             ]);
 
             return redirect()->route('pagos.show', $pago->id);
@@ -83,7 +84,7 @@ class PaymentController extends Controller
     public function pdf(Payment $pago)
     {
         $esta_reserva = Booking::find($pago->booking_id);
-        $abonos = $esta_reserva->payments()->sum('value');
+        $abonos = $esta_reserva->payments()->where('status', '1')->sum('value');
         $saldo = $esta_reserva->total - $abonos;
 
         $pdf = Pdf::loadView('pagos.pdf', compact('pago', 'saldo'));
@@ -97,7 +98,7 @@ class PaymentController extends Controller
     public function edit(Payment $pago)
     {
         $esta_reserva = Booking::find($pago->booking_id);
-        $abonos = $esta_reserva->payments()->sum('value') - $pago->value;
+        $abonos = $esta_reserva->payments()->where('status', '1')->sum('value') - $pago->value;
         $saldo = $esta_reserva->total - $abonos;
 
         $metodos = PayMethod::all();
@@ -135,5 +136,14 @@ class PaymentController extends Controller
         $pago->delete();
 
         return redirect()->route('pagos.index');
+    }
+
+    public function cancel(Payment $pago)
+    {
+        $pago->update([
+            'status' => 0,
+        ]);
+
+        return redirect()->route('pagos.show', $pago->id);
     }
 }
